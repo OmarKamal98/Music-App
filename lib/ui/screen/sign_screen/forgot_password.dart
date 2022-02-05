@@ -5,9 +5,13 @@ class ForgotPassword extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Container(
-        //color: Color(0xFF4E4387),
-        color: Colors.blue,
+      body: Column(
+        children: [
+          ,
+          Container(
+            color: Colors.blue,
+          ),
+        ],
       ),
     );
   }

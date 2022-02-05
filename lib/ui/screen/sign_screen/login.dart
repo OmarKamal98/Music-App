@@ -33,7 +33,7 @@ class Login extends StatelessWidget {
                 'SIGN IN',
                 style: TextStyle(
                     color: Colors.white,
-                    fontSize: 36,
+                    fontSize: 36.sp,
                     fontWeight: FontWeight.bold),
               ),
             ),
