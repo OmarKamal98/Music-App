@@ -7,7 +7,7 @@ class ForgotPassword extends StatelessWidget {
     return Scaffold(
       body: Container(
         //color: Color(0xFF4E4387),
-        color: Colors.red,
+        color: Colors.blue,
       ),
     );
   }
