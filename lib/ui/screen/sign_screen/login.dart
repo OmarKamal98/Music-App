@@ -78,7 +78,7 @@ class Login extends StatelessWidget {
             Container(
               height: 46.h,
               margin: EdgeInsets.only(left: 40.w, right: 40.w, top: 66.h),
-              child:CustomButton(buttonName: 'SIGN IN',onPressed: (){},)
+              child:defaultButton(text: "Sing in",radius: 2,width: double.infinity,function: (){})
               // ElevatedButton(
               //   onPressed: () {},
               //   child: const Text(

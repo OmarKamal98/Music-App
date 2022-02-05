@@ -81,7 +81,7 @@ class SignUp extends StatelessWidget {
             Container(
               height: 46.h,
               margin: EdgeInsets.only(left: 40.w, right: 40.w, top: 66.h),
-              child: CustomButton(buttonName:  'SIGN UP',onPressed: (){},)
+              child: defaultButton(text: "Sign up",radius: 2,width: double.infinity,function: (){})
               // ElevatedButton(
               //   onPressed: () {},
               //   child: Text(
