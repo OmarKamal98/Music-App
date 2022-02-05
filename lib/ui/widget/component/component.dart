@@ -58,3 +58,26 @@ height: 40.h,
       borderRadius: BorderRadius.circular(radius)
   ),
 );
+
+Widget defaultFormField ({
+
+   @required  TextEditingController controller,
+  @required TextInputType type,
+  @required Function onSubmit,
+  @required Function validate,
+  @required String  label,
+  @required IconData prefix,
+
+})=> TextFormField(
+  controller: controller,
+  keyboardType: type,
+  onFieldSubmitted:  onSubmit(),
+  validator: validate(),
+
+  decoration: InputDecoration(
+    labelText: label,
+    prefixIcon: Icon(prefix),
+    border: const OutlineInputBorder(),
+  ),
+);
+
