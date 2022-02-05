@@ -35,6 +35,8 @@ Widget defaultButton({
 Widget searchField({
   @required Function function,
   double  radius = 10.0,
+  Icon suffixIcon ,
+
 })=> Container(
 
 width: double.infinity,
@@ -42,13 +44,12 @@ height: 40.h,
 
 
   child:  TextField(
-      decoration: const InputDecoration(
+      decoration:  InputDecoration(
       
         hintText: 'Search',
         border: OutlineInputBorder(),
         prefixIcon: Icon(Icons.search,color: Colors.white,),
-        suffixIcon: Icon(Icons.cancel)
-
+        suffixIcon: suffixIcon
         ),
 
     onTap: function,

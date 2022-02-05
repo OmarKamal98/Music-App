@@ -28,7 +28,7 @@ class Login extends StatelessWidget {
                 fit: BoxFit.cover)),
         child: ListView(
           children: [
-            searchField(function: (){}),
+            searchField(function: (){},suffixIcon: Icon(Icons.cancel) ),
             Padding(
               padding: EdgeInsets.only(top: 103.h, left: 40.w),
               child: Text(
