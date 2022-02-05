@@ -6,7 +6,8 @@ class ForgotPassword extends StatelessWidget {
     // TODO: implement build
     return Scaffold(
       body: Container(
-        color: Color(0xFF4E4387),
+        //color: Color(0xFF4E4387),
+        color: Colors.red,
       ),
     );
   }
