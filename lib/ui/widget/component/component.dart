@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 const Color buttonColor = Color(0xFFCBFB5E);
 const Color searchColor = Color(0xFF363942);
+const Color screenColor = Color(0xFF0E0B1F);
+
 
 
 Widget defaultButton({
@@ -10,11 +12,12 @@ Widget defaultButton({
   double  radius = 10.0,
   Color background = buttonColor,
   bool isUpperCase = true,
+  double height = 40,
   @required Function  function,
   @required String text,
 })=> Container(
   width: width,
-  height: 46.h,
+  height: height,
   child: MaterialButton(
     onPressed: function,
     child: Text(
@@ -30,6 +33,66 @@ Widget defaultButton({
       borderRadius: BorderRadius.circular(radius)
   ),
 );
+
+
+Widget libraryItem({
+  double width = double.infinity,
+  double  radius = 10.0,
+  Color background ,
+  @required Icon prefixIcon ,
+
+  double height = 40,
+  @required Function  function,
+  @required String text,
+
+})=>InkWell(
+  onTap: function,
+  child:   Container(
+    width: width,
+    height: height,
+    decoration: BoxDecoration(
+        color: screenColor,
+
+        borderRadius: BorderRadius.circular(radius)
+
+    ),
+      child: Column(
+        children: [
+          Row(
+            children: [
+             prefixIcon,
+            SizedBox(width:20.w ,),
+              Text(
+                 text,
+                style:  TextStyle(
+                  fontSize: 14.sp,
+                  color: Colors.white,
+                ),
+              ),
+             const Spacer(),
+
+              const Icon(Icons.arrow_right,color: Colors.white,),
+
+            ],
+          ),
+
+
+
+        ],
+      ),
+
+    ),
+
+
+
+);
+
+
+
+
+
+
+
 
 
 Widget searchField({

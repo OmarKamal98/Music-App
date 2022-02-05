@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/ui/screen/account_screen/account.dart';
 import 'package:musicapp/ui/screen/sign_screen/forgot_password.dart';
 import 'package:musicapp/ui/screen/sign_screen/login.dart';
 import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
               return MediaQuery(
                 //Setting font does not change with system font size
                 data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                child: Login(),
+                child: Account(),
               );
             }));
     //return MaterialApp(home: MusicApp());
