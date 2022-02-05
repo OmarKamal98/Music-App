@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
-import 'package:musicapp/ui/widget/component/custom_buttom.dart';
+import 'package:musicapp/ui/widget/component/component.dart';
 import 'package:musicapp/ui/widget/component/social_button_circle.dart';
 import '../../widget/component/text_field_custom.dart';
 
@@ -28,6 +28,7 @@ class Login extends StatelessWidget {
                 fit: BoxFit.cover)),
         child: ListView(
           children: [
+            searchField(function: (){}),
             Padding(
               padding: EdgeInsets.only(top: 103.h, left: 40.w),
               child: Text(

@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
               return MediaQuery(
                 //Setting font does not change with system font size
                 data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-                child: Splash(),
+                child: Login(),
               );
             }));
     //return MaterialApp(home: MusicApp());

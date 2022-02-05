@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:musicapp/ui/widget/component/custom_buttom.dart';
+import 'package:musicapp/ui/widget/component/component.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key key}) : super(key: key);
@@ -22,44 +22,46 @@ class _SplashState extends State<Splash> {
     return Scaffold(
       backgroundColor: const Color(0xFF0E0B1F),
      body: Column(
-        children: [
-          Column(children: [
-            CarouselSlider.builder(
-                itemCount: splashImg.length,
-                itemBuilder: (BuildContext context, int index, int realIndex) {
-                  return Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.symmetric(horizontal: 1),
-                    child: Image.asset(
-                      splashImg[index],
-                      fit: BoxFit.cover,
-                    ),
-                  );
-                },
-                options: CarouselOptions(
-                  height: 407,
-                  initialPage: 0,
-                  enlargeCenterPage: true,
-                  aspectRatio: 2.0,
-                  autoPlay: true,
+          children: [
+
+            Column(children: [
+              CarouselSlider.builder(
+                  itemCount: splashImg.length,
+                  itemBuilder: (BuildContext context, int index, int realIndex) {
+                    return Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 1),
+                      child: Image.asset(
+                        splashImg[index],
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                  options: CarouselOptions(
+                    height: 407,
+                    initialPage: 0,
+                    enlargeCenterPage: true,
+                    aspectRatio: 2.0,
+                    autoPlay: true,
+                  )),
+            ]),
+            Container(
+                margin:  EdgeInsets.only(top: 111.h, left: 40.w  ),
+                child: Text(
+                  "WELCOME TO                          GEEZ APP",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 37.sp),
                 )),
-          ]),
-          Container(
-              margin:  EdgeInsets.only(top: 111.h, left: 40.w  ),
-              child: Text(
-                "WELCOME TO                          GEEZ APP",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 37.sp),
-              )),
-          SizedBox(height: 70.h,),
-          Padding(
-            padding:  EdgeInsets.all(40.h),
-            child: defaultButton(text: "GET STARTED",radius: 2,width: double.infinity,function: (){}),
-          )
-        ],
-      ),
+            SizedBox(height: 70.h,),
+            Padding(
+              padding:  EdgeInsets.all(40.h),
+              child: defaultButton(text: "GET STARTED",radius: 2,width: double.infinity,function: (){}),
+            )
+          ],
+        ),
+
     );
   }
 }
