@@ -37,6 +37,7 @@ dependencies:
   flutter_screenutil: ^5.1.1
   font_awesome_flutter: ^9.2.0
   dio: ^4.0.4
+  carousel_slider: ^4.0.0
 
 
 dev_dependencies:
