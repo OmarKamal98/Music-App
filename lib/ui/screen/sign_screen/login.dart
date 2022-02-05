@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
-import 'package:musicapp/ui/widget/social_button_circle.dart';
-import '../../widget/text_field_custom.dart';
+import 'package:musicapp/ui/widget/component/custom_buttom.dart';
+import 'package:musicapp/ui/widget/component/social_button_circle.dart';
+import '../../widget/component/text_field_custom.dart';
 
 class Login extends StatelessWidget {
   final Color facebookColor = const Color(0xff39579A);
@@ -77,19 +78,20 @@ class Login extends StatelessWidget {
             Container(
               height: 46.h,
               margin: EdgeInsets.only(left: 40.w, right: 40.w, top: 66.h),
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  'SIGN IN',
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xFFCBFB5E),
-                ),
-              ),
+              child:CustomButton(buttonName: 'SIGN IN',onPressed: (){},)
+              // ElevatedButton(
+              //   onPressed: () {},
+              //   child: const Text(
+              //     'SIGN IN',
+              //     style: TextStyle(
+              //         fontSize: 16,
+              //         color: Colors.black,
+              //         fontWeight: FontWeight.bold),
+              //   ),
+              //   style: ElevatedButton.styleFrom(
+              //     primary: Color(0xFFCBFB5E),
+              //   ),
+              // ),
             ),
             Container(
               margin: EdgeInsets.only(top: 104.h),
