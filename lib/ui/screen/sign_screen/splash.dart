@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/ui/screen/sign_screen/login.dart';
-import 'package:musicapp/ui/widget/component/custom_buttom.dart';
+import 'package:musicapp/ui/widget/component/component.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key key}) : super(key: key);
