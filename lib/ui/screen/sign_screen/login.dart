@@ -7,7 +7,7 @@ import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
 
 import 'package:musicapp/ui/screen/sign_screen/forgot_password.dart';
 import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
-import 'package:musicapp/ui/widget/component/custom_buttom.dart';
+import 'package:musicapp/ui/widget/component/component.dart';
 import 'package:musicapp/ui/widget/component/social_button_circle.dart';
 import 'package:provider/provider.dart';
 import '../../widget/component/text_field_custom.dart';
@@ -33,6 +33,7 @@ class Login extends StatelessWidget {
                 fit: BoxFit.cover)),
         child: ListView(
           children: [
+            searchField(function: (){},suffixIcon: Icon(Icons.cancel) ),
             Padding(
               padding: EdgeInsets.only(top: 103.h, left: 40.w),
               child: Text(
