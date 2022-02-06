@@ -43,6 +43,7 @@ dependencies:
   provider: ^6.0.2
   cloud_firestore: ^3.1.7
   string_validator: ^0.3.0
+  blur: ^3.0.0
 
 
 dev_dependencies:

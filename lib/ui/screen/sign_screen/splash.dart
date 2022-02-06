@@ -1,9 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:musicapp/model/user.dart';
 import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/provider/auth_provider.dart';
+import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
 import 'package:musicapp/ui/screen/sign_screen/login.dart';
+import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
+import 'package:provider/provider.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key key}) : super(key: key);
@@ -21,6 +27,15 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 2)).then((v) {
+      User user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        RouterClass.routerClass.pushWidgetReplacement(SignUp());
+      } else {
+        Provider.of<AuthProvider>(context, listen: false).getUserFromFirebase();
+        RouterClass.routerClass.pushWidgetReplacement(HomeScreen());
+      }
+    });
     return Scaffold(
       backgroundColor: const Color(0xFF0E0B1F),
       body: Column(

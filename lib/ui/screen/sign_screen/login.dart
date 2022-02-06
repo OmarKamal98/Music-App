@@ -33,9 +33,8 @@ class Login extends StatelessWidget {
                 fit: BoxFit.cover)),
         child: ListView(
           children: [
-            searchField(function: (){},suffixIcon: Icon(Icons.cancel) ),
             Padding(
-              padding: EdgeInsets.only(top: 103.h, left: 40.w),
+              padding: EdgeInsets.only(top: 83.h, left: 40.w),
               child: Text(
                 'SIGN IN',
                 style: TextStyle(
@@ -66,18 +65,17 @@ class Login extends StatelessWidget {
               width: 295.w,
               height: 35.h,
               margin: EdgeInsets.only(top: 38.h, left: 40.w, right: 40.w),
-              child: WidgetTextField(
-                  validationFun: (validator) {
-                    if (validator.isEmpty) return 'Required Field';
-                    if (validator != passController.text)
-                      return 'Error Password';
-                    return null;
-                  },
-                  hintText: 'Password',
-                  inputType: TextInputType.visiblePassword,
-                  controller: passController,
-                  icon: Icon(Icons.lock, color: Colors.white),
-                  endIcon: Icon(Icons.remove_red_eye_outlined)),
+              child: WidgetTextFieldPass(
+                validationFun: (validator) {
+                  if (validator.isEmpty) return 'Required Field';
+                  if (validator != passController.text) return 'Error Password';
+                  return null;
+                },
+                hintText: 'Password',
+                inputType: TextInputType.visiblePassword,
+                controller: passController,
+                icon: Icon(Icons.lock, color: Colors.white),
+              ),
             ),
             Container(
               margin: EdgeInsets.only(left: 203.w, right: 42.w, top: 38.h),
@@ -104,21 +102,7 @@ class Login extends StatelessWidget {
                       Provider.of<AuthProvider>(context, listen: false).login(
                           email: emailController.text,
                           password: passController.text);
-                    })
-                // ElevatedButton(
-                //   onPressed: () {},
-                //   child: const Text(
-                //     'SIGN IN',
-                //     style: TextStyle(
-                //         fontSize: 16,
-                //         color: Colors.black,
-                //         fontWeight: FontWeight.bold),
-                //   ),
-                //   style: ElevatedButton.styleFrom(
-                //     primary: Color(0xFFCBFB5E),
-                //   ),
-                // ),
-                ),
+                    })),
             Container(
               margin: EdgeInsets.only(top: 104.h),
               child: Column(

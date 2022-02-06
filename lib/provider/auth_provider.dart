@@ -9,18 +9,16 @@ import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
 import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
 
 class AuthProvider extends ChangeNotifier {
-  String name;
-  String username;
-  String email;
+  UserApp loggedUser;
   createUser(UserApp userApp) async {
     try {
       UserCredential x = await AuthHelper.authHelper
           .createNewAccount(userApp.email, userApp.password);
       userApp.id = x.user.uid;
+      this.loggedUser = userApp;
       FirestoreHelper.firestoreHelper.createUser(userApp);
       if (x != null) {
         RouterClass.routerClass.pushWidgetReplacement(HomeScreen());
-        // navigate to home
       } else {
         log('error occured');
       }
@@ -31,12 +29,20 @@ class AuthProvider extends ChangeNotifier {
 
   login({String email, String password}) async {
     UserCredential x = await AuthHelper.authHelper.signIn(email, password);
+    await getUserFromFirebase();
     if (x != null) {
       RouterClass.routerClass.pushWidget(HomeScreen());
       // navigate to home
     } else {
       log('error occured');
     }
+  }
+
+  getUserFromFirebase() async {
+    String userId = FirebaseAuth.instance.currentUser.uid;
+    this.loggedUser =
+        await FirestoreHelper.firestoreHelper.getUserFromFs(userId);
+    notifyListeners();
   }
 
   logOut() async {

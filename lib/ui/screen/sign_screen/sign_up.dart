@@ -89,13 +89,12 @@ class SignUp extends StatelessWidget {
               width: 295.w,
               height: 35.h,
               margin: EdgeInsets.only(top: 38.h, left: 40.w, right: 40.w),
-              child: WidgetTextField(
+              child: WidgetTextFieldPass(
                 validationFun: nullValidator,
                 hintText: 'Password',
                 inputType: TextInputType.visiblePassword,
                 controller: passController,
                 icon: Icon(Icons.lock, color: Colors.white),
-                endIcon: Icon(Icons.remove_red_eye_outlined),
               ),
             ),
             Container(
