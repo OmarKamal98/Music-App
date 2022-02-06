@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/ui/screen/sign_screen/login.dart';
 import 'package:musicapp/ui/widget/component/custom_buttom.dart';
 
 class Splash extends StatefulWidget {
@@ -21,7 +23,7 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF0E0B1F),
-     body: Column(
+      body: Column(
         children: [
           Column(children: [
             CarouselSlider.builder(
@@ -45,7 +47,7 @@ class _SplashState extends State<Splash> {
                 )),
           ]),
           Container(
-              margin:  EdgeInsets.only(top: 111.h, left: 40.w  ),
+              margin: EdgeInsets.only(top: 111.h, left: 40.w),
               child: Text(
                 "WELCOME TO                          GEEZ APP",
                 style: TextStyle(
@@ -53,10 +55,18 @@ class _SplashState extends State<Splash> {
                     fontWeight: FontWeight.bold,
                     fontSize: 37.sp),
               )),
-          SizedBox(height: 70.h,),
+          SizedBox(
+            height: 70.h,
+          ),
           Padding(
-            padding:  EdgeInsets.all(40.h),
-            child: defaultButton(text: "GET STARTED",radius: 2,width: double.infinity,function: (){}),
+            padding: EdgeInsets.all(40.h),
+            child: defaultButton(
+                text: "GET STARTED",
+                radius: 2,
+                width: double.infinity,
+                function: () {
+                  RouterClass.routerClass.pushWidgetReplacement(Login());
+                }),
           )
         ],
       ),

@@ -7,7 +7,7 @@ class WidgetTextField extends StatelessWidget {
   TextEditingController controller;
   Icon icon;
   Icon endIcon;
-  bool isHidden;
+  bool isHiidden;
 
   WidgetTextField(
       {this.validationFun,
@@ -16,19 +16,19 @@ class WidgetTextField extends StatelessWidget {
       this.controller,
       this.icon,
       this.endIcon,
-      this.isHidden = false,
+      this.isHiidden = false,
       Key key})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return TextFormField(
-      obscureText: isHidden,
-      //autovalidateMode: AutovalidateMode.onUserInteraction,
-      //validator: (value) => validationFun(value),
+      style: TextStyle(color: Colors.white),
+      //obscureText: isHidden,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) => validationFun(value),
       controller: controller,
       keyboardType: inputType,
-
       decoration: InputDecoration(
         // border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
         prefixIcon: icon,

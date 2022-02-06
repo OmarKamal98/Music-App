@@ -38,6 +38,11 @@ dependencies:
   font_awesome_flutter: ^9.2.0
   dio: ^4.0.4
   carousel_slider: ^4.0.0
+  firebase_core: ^1.11.0
+  firebase_auth: ^3.3.5
+  provider: ^6.0.2
+  cloud_firestore: ^3.1.7
+  string_validator: ^0.3.0
 
 
 dev_dependencies:

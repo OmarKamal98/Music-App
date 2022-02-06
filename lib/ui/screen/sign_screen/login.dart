@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/provider/auth_provider.dart';
+import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
+
+import 'package:musicapp/ui/screen/sign_screen/forgot_password.dart';
 import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
 import 'package:musicapp/ui/widget/component/custom_buttom.dart';
 import 'package:musicapp/ui/widget/component/social_button_circle.dart';
+import 'package:provider/provider.dart';
 import '../../widget/component/text_field_custom.dart';
 
 class Login extends StatelessWidget {
   final Color facebookColor = const Color(0xff39579A);
   final Color twitterColor = const Color(0xff00ABEA);
   final Color googleColor = const Color(0xffDF4A32);
-  TextEditingController emailController;
-  TextEditingController passController;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -43,6 +48,10 @@ class Login extends StatelessWidget {
               height: 35.h,
               margin: EdgeInsets.only(top: 64.h, left: 40.w, right: 40.w),
               child: WidgetTextField(
+                validationFun: (validator) {
+                  if (validator.isEmpty) return 'Required Field';
+                  return null;
+                },
                 hintText: 'E-Mail',
                 inputType: TextInputType.emailAddress,
                 controller: emailController,
@@ -57,6 +66,12 @@ class Login extends StatelessWidget {
               height: 35.h,
               margin: EdgeInsets.only(top: 38.h, left: 40.w, right: 40.w),
               child: WidgetTextField(
+                  validationFun: (validator) {
+                    if (validator.isEmpty) return 'Required Field';
+                    if (validator != passController.text)
+                      return 'Error Password';
+                    return null;
+                  },
                   hintText: 'Password',
                   inputType: TextInputType.visiblePassword,
                   controller: passController,
@@ -66,7 +81,9 @@ class Login extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(left: 203.w, right: 42.w, top: 38.h),
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    RouterClass.routerClass.pushWidget(ForgotPassword());
+                  },
                   child: const Text(
                     'Forgot Password?',
                     style: TextStyle(
@@ -76,23 +93,31 @@ class Login extends StatelessWidget {
                   )),
             ),
             Container(
-              height: 46.h,
-              margin: EdgeInsets.only(left: 40.w, right: 40.w, top: 66.h),
-              child:defaultButton(text: "Sing in",radius: 2,width: double.infinity,function: (){})
-              // ElevatedButton(
-              //   onPressed: () {},
-              //   child: const Text(
-              //     'SIGN IN',
-              //     style: TextStyle(
-              //         fontSize: 16,
-              //         color: Colors.black,
-              //         fontWeight: FontWeight.bold),
-              //   ),
-              //   style: ElevatedButton.styleFrom(
-              //     primary: Color(0xFFCBFB5E),
-              //   ),
-              // ),
-            ),
+                height: 46.h,
+                margin: EdgeInsets.only(left: 40.w, right: 40.w, top: 66.h),
+                child: defaultButton(
+                    text: "Sing in",
+                    radius: 2,
+                    width: double.infinity,
+                    function: () {
+                      Provider.of<AuthProvider>(context, listen: false).login(
+                          email: emailController.text,
+                          password: passController.text);
+                    })
+                // ElevatedButton(
+                //   onPressed: () {},
+                //   child: const Text(
+                //     'SIGN IN',
+                //     style: TextStyle(
+                //         fontSize: 16,
+                //         color: Colors.black,
+                //         fontWeight: FontWeight.bold),
+                //   ),
+                //   style: ElevatedButton.styleFrom(
+                //     primary: Color(0xFFCBFB5E),
+                //   ),
+                // ),
+                ),
             Container(
               margin: EdgeInsets.only(top: 104.h),
               child: Column(
