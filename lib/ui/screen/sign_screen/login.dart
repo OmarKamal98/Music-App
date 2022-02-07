@@ -34,7 +34,7 @@ class Login extends StatelessWidget {
         child: ListView(
           children: [
             Padding(
-              padding: EdgeInsets.only(top: 83.h, left: 40.w),
+              padding: EdgeInsets.only(top: 60.h, left: 40.w),
               child: Text(
                 'SIGN IN',
                 style: TextStyle(

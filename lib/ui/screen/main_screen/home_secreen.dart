@@ -1,38 +1,190 @@
 import 'dart:ui';
-
 import 'package:blur/blur.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<HomeScreen> {
+  List cardItems = [
+    {
+      "name": "Atif Aslam",
+      "img": "https://i.ytimg.com/vi/a18py61_F_w/maxresdefault.jpg",
+    },
+    {
+      "name": "Gul Panra",
+      "img":
+          "https://images.hungama.com/c/1/2d0/9d5/48481154/48481154_200x200.jpg"
+    },
+    {
+      "name": "Momina",
+      "img":
+          "https://media.lyricsmint.com/photos/6254/ko-ko-korina-coke-studio-11-momina-mustehsan_cover.jpg"
+    },
+    {
+      "name": "Atif Aslam",
+      "img": "https://i.ytimg.com/vi/a18py61_F_w/maxresdefault.jpg"
+    },
+    {
+      "name": "Gul Panra",
+      "img":
+          "https://images.hungama.com/c/1/2d0/9d5/48481154/48481154_200x200.jpg"
+    },
+    {
+      "name": "Momina",
+      "img":
+          "https://media.lyricsmint.com/photos/6254/ko-ko-korina-coke-studio-11-momina-mustehsan_cover.jpg"
+    }
+  ];
+
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(8.0),
+      backgroundColor: Color(0xFF0E0B1F),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            InkWell(
-              onTap: () {},
-              child: Stack(
-                children: [
+            Container(
+              margin: EdgeInsets.only(top: 64.h, left: 25.w, right: 24.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'Geez',
+                    style: TextStyle(
+                        fontSize: 48.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  const Icon(
+                    Icons.search,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 25.h, left: 25.w, right: 24.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Text(
+                    'New Albums',
+                    style: TextStyle(
+                        fontSize: 22.sp,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'View all',
+                        style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      )),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 17.h),
+              child: GestureDetector(
+                child: Container(
+                  height: 200,
+                  width: double.infinity,
+                  child: Swiper(
+                    itemBuilder: (BuildContext context, int index) {
+                      return Stack(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 15, left: 15),
+                            child: Image.asset('assets/images/splash1.png')
+                                .blurred(
+                              colorOpacity: 0.2,
+                              borderRadius: BorderRadius.circular(5),
+                              blur: 20,
+                            ),
+                          ),
+                          Padding(
+                              padding: EdgeInsets.only(bottom: 15, right: 15),
+                              child: Image.asset('assets/images/splash1.png')
+                                  .blurred(
+                                borderRadius: BorderRadius.circular(5),
+                                blur: 0,
+                                colorOpacity: 0.0,
+                              ))
+                        ],
+                      );
+                    },
+                    itemCount: 5,
+                    viewportFraction: 0.5,
+                    scale: 0.7,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 40.h,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 24.w),
+              child: Text(
+                'Geez Weekly',
+                style: TextStyle(
+                    fontSize: 22.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 24.w, top: 18.h),
+              height: 188.h,
+              width: 327.w,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/login.png'),
+                      fit: BoxFit.cover)),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(top: 15, left: 15),
-                    child: Image.asset('assets/images/splash1.png').blurred(
-                      colorOpacity: 0.2,
-                      borderRadius: BorderRadius.circular(5),
-                      blur: 20,
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Text(
+                      " Recently Music ",
+                      style: TextStyle(
+                          fontSize: 22,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Padding(
-                      padding: EdgeInsets.only(bottom: 15, right: 15),
-                      child: Image.asset('assets/images/splash1.png').blurred(
-                        borderRadius: BorderRadius.circular(5),
-                        blur: 0,
-                        colorOpacity: 0.0,
-                      ))
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: List.generate(cardItems.length, (index) {
+                        return MusicCard(
+                          url: cardItems[index]['img'],
+                          name: cardItems[index]['name'],
+                        );
+                      }),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -40,31 +192,97 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
-    // return Scaffold(
-    //   body: Container(
-    //     child: SingleChildScrollView(
-    //       scrollDirection: Axis.horizontal,
-    //       child: Container(
-    //         color: Colors.red,
-    //         width: MediaQuery.of(context).size.width,
-    //         height: MediaQuery.of(context).size.height * .4,
-    //         child: Row(
-    //           children: [
-    //             Stack(
-    //               children: [
-    //                 Container(
-    //                     width: 50,
-    //                     height: 50,
-    //                     margin: EdgeInsets.only(top: 20.h, left: 20.w),
-    //                     child: Image.asset('assets/images/splash1.png',
-    //                         fit: BoxFit.cover)),
-    //               ],
-    //             ),
-    //           ],
-    //         ),
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
+
+// ignore: must_be_immutable
+class MusicCard extends StatelessWidget {
+  String url;
+  String name;
+  MusicCard({this.url, this.name});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 7, right: 7),
+          child: Container(
+            height: 120,
+            width: 130,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                "$url",
+                fit: BoxFit.cover,
+              ),
+            ),
+            decoration: BoxDecoration(
+                color: Colors.lightBlue.withOpacity(0.5),
+                boxShadow: [
+                  new BoxShadow(
+                      color: Colors.lightBlue.shade200, blurRadius: 6.0)
+                ],
+                borderRadius: BorderRadius.circular(20)),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Text(
+          name,
+          style: TextStyle(
+            fontSize: 15,
+            color: Colors.white,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// import 'dart:ui';
+//
+// import 'package:blur/blur.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_screenutil/flutter_screenutil.dart';
+//
+// class HomeScreen extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     // TODO: implement build
+//     return Scaffold(
+//       body: Padding(
+//         padding: EdgeInsets.all(8.0),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//           children: <Widget>[
+//             InkWell(
+//               onTap: () {},
+//               child: Stack(
+//                 children: [
+//                   Padding(
+//                     padding: EdgeInsets.only(top: 15, left: 15),
+//                     child: Image.asset('assets/images/splash1.png').blurred(
+//                       colorOpacity: 0.2,
+//                       borderRadius: BorderRadius.circular(5),
+//                       blur: 20,
+//                     ),
+//                   ),
+//                   Padding(
+//                       padding: EdgeInsets.only(bottom: 15, right: 15),
+//                       child: Image.asset('assets/images/splash1.png').blurred(
+//                         borderRadius: BorderRadius.circular(5),
+//                         blur: 0,
+//                         colorOpacity: 0.0,
+//                       ))
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//
+//   }
+// }

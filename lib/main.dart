@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/provider/auth_provider.dart';
 import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
+import 'package:musicapp/ui/screen/main_screen/main_nav_screen.dart';
 import 'package:musicapp/ui/screen/sign_screen/splash.dart';
 import 'package:provider/provider.dart';
 
@@ -35,28 +36,11 @@ class MyApp extends StatelessWidget {
                   child: widget,
                 );
               },
-              home: HomeScreen(),
+              home: MainNav(),
             ));
     //return MaterialApp(home: MusicApp());
   }
-} /*
-           builder: () => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter_ScreenUtil',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          textTheme: TextTheme(button: TextStyle(fontSize: 45.sp)),
-        ),
-        builder: (context, widget) {
-          ScreenUtil.setContext(context);
-          return MediaQuery(
-            //Setting font does not change with system font size
-            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-            child: widget,
-          );
-        },
-        home: HomePage(title: 'FlutterScreenUtil Demo'),
-      ),*/
+}
 
 class MusicApp extends StatelessWidget {
   @override

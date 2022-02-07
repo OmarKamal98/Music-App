@@ -44,11 +44,14 @@ dependencies:
   cloud_firestore: ^3.1.7
   string_validator: ^0.3.0
   blur: ^3.0.0
+  persistent_bottom_nav_bar: ^4.0.2
+  flutter_swiper: ^1.1.6
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
