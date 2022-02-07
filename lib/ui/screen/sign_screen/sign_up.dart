@@ -10,13 +10,26 @@ import '../../../navigator/router_class.dart';
 import '../../widget/component/social_button_circle.dart';
 import '../../widget/component/text_field_custom.dart';
 
-class SignUp extends StatelessWidget {
+class SignUp extends StatefulWidget {
+  @override
+  State<SignUp> createState() => _SignUpState();
+}
+
+class _SignUpState extends State<SignUp> {
   final Color facebookColor = const Color(0xff39579A);
+
   final Color twitterColor = const Color(0xff00ABEA);
+
   final Color googleColor = const Color(0xffDF4A32);
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController nameController = TextEditingController();
+
   TextEditingController passController = TextEditingController();
+
+  bool isPass = true;
+
   validateEmail(String value) {
     if (!isEmail(value)) {
       return 'InCorrect Email';
@@ -89,12 +102,25 @@ class SignUp extends StatelessWidget {
               width: 295.w,
               height: 35.h,
               margin: EdgeInsets.only(top: 38.h, left: 40.w, right: 40.w),
-              child: WidgetTextFieldPass(
-                validationFun: nullValidator,
+              child: WidgetTextField(
+                validationFun: (validator) {
+                  if (validator.isEmpty) return 'Required Field';
+                  if (validator != passController.text) return 'Error Password';
+                  return null;
+                },
+                isPassword: isPass,
                 hintText: 'Password',
                 inputType: TextInputType.visiblePassword,
                 controller: passController,
+                endIconFunction: () {
+                  setState(() {
+                    isPass = !isPass;
+                  });
+                },
                 icon: Icon(Icons.lock, color: Colors.white),
+                endIcon: isPass == true
+                    ? Icon(Icons.remove_red_eye, color: Colors.white)
+                    : Icon(Icons.remove_red_eye_outlined, color: Colors.white),
               ),
             ),
             Container(

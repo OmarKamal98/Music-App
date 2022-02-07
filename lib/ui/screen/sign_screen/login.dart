@@ -10,14 +10,27 @@ import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
 import 'package:musicapp/ui/widget/component/social_button_circle.dart';
 import 'package:provider/provider.dart';
+import 'package:string_validator/string_validator.dart';
 import '../../widget/component/text_field_custom.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   final Color facebookColor = const Color(0xff39579A);
+
   final Color twitterColor = const Color(0xff00ABEA);
+
   final Color googleColor = const Color(0xffDF4A32);
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController passController = TextEditingController();
+
+  bool isPass = true;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -48,9 +61,10 @@ class Login extends StatelessWidget {
               height: 35.h,
               margin: EdgeInsets.only(top: 64.h, left: 40.w, right: 40.w),
               child: WidgetTextField(
-                validationFun: (validator) {
-                  if (validator.isEmpty) return 'Required Field';
-                  return null;
+                validationFun: (String value) {
+                  if (!isEmail(value)) {
+                    return 'InCorrect Email';
+                  }
                 },
                 hintText: 'E-Mail',
                 inputType: TextInputType.emailAddress,
@@ -65,16 +79,25 @@ class Login extends StatelessWidget {
               width: 295.w,
               height: 35.h,
               margin: EdgeInsets.only(top: 38.h, left: 40.w, right: 40.w),
-              child: WidgetTextFieldPass(
+              child: WidgetTextField(
                 validationFun: (validator) {
                   if (validator.isEmpty) return 'Required Field';
                   if (validator != passController.text) return 'Error Password';
                   return null;
                 },
+                isPassword: isPass,
                 hintText: 'Password',
                 inputType: TextInputType.visiblePassword,
                 controller: passController,
+                endIconFunction: () {
+                  setState(() {
+                    isPass = !isPass;
+                  });
+                },
                 icon: Icon(Icons.lock, color: Colors.white),
+                endIcon: isPass == true
+                    ? Icon(Icons.remove_red_eye, color: Colors.white)
+                    : Icon(Icons.remove_red_eye_outlined, color: Colors.white),
               ),
             ),
             Container(

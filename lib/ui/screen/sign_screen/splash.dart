@@ -2,10 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:musicapp/model/user.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/provider/auth_provider.dart';
-import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
+import 'package:musicapp/ui/screen/main_screen/main_navegation_bar/main_nav_screen.dart';
 import 'package:musicapp/ui/screen/sign_screen/login.dart';
 import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
@@ -27,13 +26,13 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 2)).then((v) {
+    Future.delayed(Duration(seconds: 8)).then((v) {
       User user = FirebaseAuth.instance.currentUser;
       if (user == null) {
         RouterClass.routerClass.pushWidgetReplacement(SignUp());
       } else {
         Provider.of<AuthProvider>(context, listen: false).getUserFromFirebase();
-        RouterClass.routerClass.pushWidgetReplacement(HomeScreen());
+        RouterClass.routerClass.pushWidgetReplacement(MainNav());
       }
     });
     return Scaffold(
@@ -80,7 +79,14 @@ class _SplashState extends State<Splash> {
                 radius: 2,
                 width: double.infinity,
                 function: () {
-                  RouterClass.routerClass.pushWidgetReplacement(Login());
+                  User user = FirebaseAuth.instance.currentUser;
+                  if (user == null) {
+                    RouterClass.routerClass.pushWidgetReplacement(SignUp());
+                  } else {
+                    Provider.of<AuthProvider>(context, listen: false)
+                        .getUserFromFirebase();
+                    RouterClass.routerClass.pushWidgetReplacement(MainNav());
+                  }
                 }),
           )
         ],
