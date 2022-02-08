@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/ui/screen/account_collection_screen/album_collection.dart';
+import 'package:musicapp/ui/screen/account_collection_screen/artist_collection.dart';
 import 'package:musicapp/ui/screen/account_collection_screen/my_playlist.dart';
+import 'package:musicapp/ui/screen/account_collection_screen/song_collection.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
 
 class Account extends StatefulWidget {
@@ -156,7 +159,9 @@ class _AccountState extends State<Account> {
                   color: Colors.white,
                 ),
                 text: "Album",
-                function: () {},
+                function: () {
+                  RouterClass.routerClass.pushWidget(AlbumCollection());
+                },
               ),
               Divider(
                 color: Colors.white,
@@ -171,7 +176,9 @@ class _AccountState extends State<Account> {
                   color: Colors.white,
                 ),
                 text: "MV",
-                function: () {},
+                function: () {
+                  RouterClass.routerClass.pushWidget(SongCollection());
+                },
               ),
               Divider(
                 color: Colors.white,
@@ -186,7 +193,9 @@ class _AccountState extends State<Account> {
                   color: Colors.white,
                 ),
                 text: "Artist",
-                function: () {},
+                function: () {
+                  RouterClass.routerClass.pushWidget(ArtistCollection());
+                },
               ),
               Divider(
                 color: Colors.white,
