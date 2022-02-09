@@ -1,12 +1,15 @@
-import 'dart:ui';
+
 import 'package:blur/blur.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:musicapp/ui/widget/component/component.dart';
 
 class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key key}) : super(key: key);
+
   @override
   _HomeState createState() => _HomeState();
 }
@@ -46,14 +49,14 @@ class _HomeState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF0E0B1F),
+      backgroundColor: const Color(0xFF0E0B1F),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 64.h, left: 25.w, right: 24.w),
+              margin: EdgeInsets.only(top: 50.h, left: 25.w, right: 24.w),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -99,15 +102,15 @@ class _HomeState extends State<HomeScreen> {
             Padding(
               padding: EdgeInsets.only(top: 17.h),
               child: GestureDetector(
-                child: Container(
-                  height: 200,
+                child: SizedBox(
+                  height: 120,
                   width: double.infinity,
                   child: Swiper(
                     itemBuilder: (BuildContext context, int index) {
                       return Stack(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(top: 15, left: 15),
+                            padding: const EdgeInsets.only(top: 15, left: 15),
                             child: Image.asset('assets/images/splash1.png')
                                 .blurred(
                               colorOpacity: 0.2,
@@ -116,7 +119,7 @@ class _HomeState extends State<HomeScreen> {
                             ),
                           ),
                           Padding(
-                              padding: EdgeInsets.only(bottom: 15, right: 15),
+                              padding: const EdgeInsets.only(bottom: 15, right: 15),
                               child: Image.asset('assets/images/splash1.png')
                                   .blurred(
                                 borderRadius: BorderRadius.circular(5),
@@ -127,66 +130,142 @@ class _HomeState extends State<HomeScreen> {
                       );
                     },
                     itemCount: 5,
-                    viewportFraction: 0.5,
-                    scale: 0.7,
+                    viewportFraction: 0.4,
+                    scale: 1,
                   ),
                 ),
               ),
             ),
             SizedBox(
-              height: 40.h,
+              height: 25.h,
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 24.w),
-              child: Text(
-                'Geez Weekly',
-                style: TextStyle(
-                    fontSize: 22.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(left: 24.w, top: 18.h),
-              height: 188.h,
-              width: 327.w,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/login.png'),
-                      fit: BoxFit.cover)),
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 30),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20),
-                    child: Text(
-                      " Recently Music ",
-                      style: TextStyle(
-                          fontSize: 22,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Column(
+                    children: [
+                      Container(
+                        margin:
+                            EdgeInsets.only(top: 25.h, left: 25.w, right: 24.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text(
+                              'Top Albums',
+                              style: TextStyle(
+                                  fontSize: 22.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            TextButton(
+                                onPressed: () {},
+                                child: Text(
+                                  'View all',
+                                  style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                )),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5.h),
+                        child: GestureDetector(
+                          child: SizedBox(
+                            height: 120,
+                            width: double.infinity,
+                            child: Swiper(
+                              itemBuilder: (BuildContext context, int index) {
+                                return Stack(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(top: 15, left: 15),
+                                      child: Image.asset(
+                                              'assets/images/splash1.png')
+                                          .blurred(
+                                        colorOpacity: 0.2,
+                                        borderRadius: BorderRadius.circular(5),
+                                        blur: 20,
+                                      ),
+                                    ),
+                                    Padding(
+                                        padding: const EdgeInsets.only(
+                                            bottom: 15, right: 15),
+                                        child: Image.asset(
+                                                'assets/images/splash1.png')
+                                            .blurred(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          blur: 0,
+                                          colorOpacity: 0.0,
+                                        ))
+                                  ],
+                                );
+                              },
+                              itemCount: 5,
+                              viewportFraction: 0.4,
+                              scale: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 40.h,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 20),
+                  child: Text(
+                    " Popular Music ",
+                    style: TextStyle(
+                        fontSize: 22,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+
+              Container(
+height: 400,
+                  child: ListView.builder(
+                    scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: 10,
+                      itemBuilder: (context,index){
+                        return  cardMusic(
+                            onTapFun: () {},
+                            image: Image.asset('assets/images/splash1.png'),
+                            title: const Text(
+                              "absd",
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            subtitle: const Text(
+                              "absd",
+                              style: const TextStyle(color: Colors.white),
+                            ));
+                      },
+
+
                     ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: List.generate(cardItems.length, (index) {
-                        return MusicCard(
-                          url: cardItems[index]['img'],
-                          name: cardItems[index]['name'],
-                        );
-                      }),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+
+                // SingleChildScrollView(
+                //   scrollDirection: Axis.vertical,
+                //   child: Column(
+                //     children: List.generate(cardItems.length, (index) {
+                //       return MusicCard(
+                //         url: cardItems[index]['img'],
+                //         name: cardItems[index]['name'],
+                //       );
+                //     }),
+                //   ),
+                // ),
+              ],
             ),
           ],
         ),
@@ -196,93 +275,51 @@ class _HomeState extends State<HomeScreen> {
 }
 
 // ignore: must_be_immutable
-class MusicCard extends StatelessWidget {
-  String url;
-  String name;
-  MusicCard({this.url, this.name});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: 7, right: 7),
-          child: Container(
-            height: 120,
-            width: 130,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                "$url",
-                fit: BoxFit.cover,
-              ),
-            ),
-            decoration: BoxDecoration(
-                color: Colors.lightBlue.withOpacity(0.5),
-                boxShadow: [
-                  new BoxShadow(
-                      color: Colors.lightBlue.shade200, blurRadius: 6.0)
-                ],
-                borderRadius: BorderRadius.circular(20)),
-          ),
-        ),
-        SizedBox(
-          height: 20,
-        ),
-        Text(
-          name,
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.white,
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-// import 'dart:ui';
+// class MusicCard extends StatelessWidget {
+//   String url;
+//   String name;
+//   MusicCard({this.url, this.name});
 //
-// import 'package:blur/blur.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
-//
-// class HomeScreen extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {
-//     // TODO: implement build
-//     return Scaffold(
-//       body: Padding(
-//         padding: EdgeInsets.all(8.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//           children: <Widget>[
-//             InkWell(
-//               onTap: () {},
-//               child: Stack(
-//                 children: [
-//                   Padding(
-//                     padding: EdgeInsets.only(top: 15, left: 15),
-//                     child: Image.asset('assets/images/splash1.png').blurred(
-//                       colorOpacity: 0.2,
-//                       borderRadius: BorderRadius.circular(5),
-//                       blur: 20,
-//                     ),
+//     return Column(
+//       children: <Widget>[
+//         Padding(
+//           padding: const EdgeInsets.only(left: 7, right: 7),
+//           child: Container(
+//             height: 120,
+//             width: 130,
+//             child: Row(
+//               children: [
+//                 ClipRRect(
+//                   borderRadius: BorderRadius.circular(20),
+//                   child: Image.network(
+//                     "$url",
+//                     fit: BoxFit.cover,
 //                   ),
-//                   Padding(
-//                       padding: EdgeInsets.only(bottom: 15, right: 15),
-//                       child: Image.asset('assets/images/splash1.png').blurred(
-//                         borderRadius: BorderRadius.circular(5),
-//                         blur: 0,
-//                         colorOpacity: 0.0,
-//                       ))
-//                 ],
-//               ),
+//                 ),
+//               ],
 //             ),
-//           ],
+//             decoration: BoxDecoration(
+//                 color: Colors.lightBlue.withOpacity(0.5),
+//                 boxShadow: [
+//                   new BoxShadow(
+//                       color: Colors.lightBlue.shade200, blurRadius: 6.0)
+//                 ],
+//                 borderRadius: BorderRadius.circular(20)),
+//           ),
 //         ),
-//       ),
+//         SizedBox(
+//           height: 20,
+//         ),
+//         Text(
+//           name,
+//           style: TextStyle(
+//             fontSize: 15,
+//             color: Colors.white,
+//           ),
+//         ),
+//       ],
 //     );
-//
 //   }
 // }
