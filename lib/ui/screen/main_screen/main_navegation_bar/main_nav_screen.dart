@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:musicapp/ui/screen/main_screen/Radio_screen.dart';
+import 'package:musicapp/audio_player_asset.dart';
 import 'package:musicapp/ui/screen/main_screen/account.dart';
 import 'package:musicapp/ui/screen/main_screen/explore_screen.dart';
 import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
+import 'package:musicapp/ui/screen/main_screen/my_music.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class MainNav extends StatelessWidget {
@@ -63,8 +64,8 @@ class MainNav extends StatelessWidget {
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.radio),
-        title: ("Radio"),
+        icon: Icon(Icons.queue_music),
+        title: ("My Music"),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -78,6 +79,6 @@ class MainNav extends StatelessWidget {
   }
 
   List<Widget> _buildScreens() {
-    return [HomeScreen(), ExploreScreen(), RadioScreen(), Account()];
+    return [HomeScreen(), ExploreScreen(), MyMusicScreen(), Account()];
   }
 }
