@@ -231,7 +231,7 @@ class _HomeState extends State<HomeScreen> {
                 ),
 
               Container(
-height: 400,
+                height: 400,
                   child: ListView.builder(
                     scrollDirection: Axis.vertical,
                       shrinkWrap: true,

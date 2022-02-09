@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/provider/auth_provider.dart';
 import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
+import 'package:musicapp/ui/screen/main_screen/player_screen.dart';
 import 'package:musicapp/ui/screen/main_screen/setting.dart';
 import 'package:musicapp/ui/screen/sign_screen/login.dart';
 import 'package:musicapp/ui/screen/sign_screen/splash.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
                   child: widget,
                 );
               },
-              home: HomeScreen(),
+              home: PlayerScreen(),
             ));
     //return MaterialApp(home: MusicApp());
   }
