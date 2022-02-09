@@ -6,6 +6,7 @@ import 'package:musicapp/ui/screen/account_collection_screen/album_collection.da
 import 'package:musicapp/ui/screen/account_collection_screen/artist_collection.dart';
 import 'package:musicapp/ui/screen/account_collection_screen/my_playlist.dart';
 import 'package:musicapp/ui/screen/account_collection_screen/song_collection.dart';
+import 'package:musicapp/ui/screen/main_screen/setting.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
 
 class Account extends StatefulWidget {
@@ -38,7 +39,7 @@ class _AccountState extends State<Account> {
                         fontSize: 48.sp),
                   ),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: (){RouterClass.routerClass.pushWidget(Setting());},
                     icon: const Icon(Icons.settings),
                     color: Colors.white,
                   ),
