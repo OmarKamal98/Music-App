@@ -58,6 +58,9 @@ class _SplashState extends State<Splash> {
                   enlargeCenterPage: true,
                   aspectRatio: 2.0,
                   autoPlay: true,
+                    autoPlayInterval : const Duration(milliseconds: 1000),
+                  autoPlayAnimationDuration: const Duration(seconds: 1),
+
                 )),
           ]),
           Container(

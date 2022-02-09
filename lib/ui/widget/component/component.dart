@@ -45,6 +45,7 @@ Widget libraryItem({
   @required Function  function,
   @required String text,
 
+
 })=>InkWell(
   onTap: function,
   child:   Container(
@@ -85,6 +86,23 @@ Widget libraryItem({
 
 
 
+);
+
+Widget cardMusic({
+  double width = double.infinity,
+  double  radius = 10.0,
+  double height = 40,
+  @required Function onTapFun ,
+  @required Image image,
+  @required Text title,
+  @required Text subtitle,
+
+})=> ListTile(
+  onTap: onTapFun,
+  leading: image,
+  title: title,
+  subtitle: subtitle,
+ trailing: Icon(Icons.more_vert_outlined ,color: Colors.white,),
 );
 
 
