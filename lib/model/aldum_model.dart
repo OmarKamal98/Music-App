@@ -120,7 +120,7 @@ class Albums {
       data['external_urls'] = this.externalUrls.toJson();
     }
     if (this.genres != null) {
-      data['genres'] = this.genres.map((v) => v.toJson()).toList();
+      // data['genres'] = this.genres.map((v) => v.toJson()).toList();
     }
     data['id'] = this.id;
     if (this.images != null) {
