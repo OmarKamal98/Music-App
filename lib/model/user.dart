@@ -10,7 +10,7 @@ class UserApp {
   UserApp({
     this.id,
     @required this.name,
-    @required this.phone,
+    this.phone = '0595217143',
     @required this.email,
     @required this.password,
   });
@@ -24,7 +24,8 @@ class UserApp {
     return {
       'name': this.name,
       'phone': this.phone,
-      'email': this.email
+      'email': this.email,
+      'id': this.id
     };
   }
 }

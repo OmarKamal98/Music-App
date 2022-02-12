@@ -1,33 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:musicapp/ui/widget/component/component.dart';
 
 class PlayerScreen extends StatefulWidget {
-  const PlayerScreen({Key key}) : super(key: key);
-
-
-
-
+  SongInfo songInfo;
+  PlayerScreen(this.songInfo, {Key key}) : super(key: key);
 
   @override
   _PlayerScreenState createState() => _PlayerScreenState();
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-int valueHolder = 20;
+  static int parsetominsec(int ms) {
+    // String data;
+    Duration duration = Duration(milliseconds: ms);
+    // int min = duration.inMinutes;
+    int sec = duration.inSeconds;
+    // data = min.toString() + ":" + sec.toString();
 
-   Duration _time;
-/*
-* @override
-  void initState() {
-    super.initState();
-    main();
-    response = widget.songsList;
-    globalIndex = widget.index;
-    if (globalIndex == -1) {
-      globalIndex = 0;
-    }
-* */ // initState
+    return sec;
+  }
 
+  int valueHolder = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -44,55 +39,57 @@ int valueHolder = 20;
           onPressed: () {
             Navigator.pop(context);
           },
-
         ),
         actions: [
           PopupMenuButton(
             icon: const Icon(
               Icons.more_vert_rounded,
+              color: Colors.white,
             ),
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(15.0),
               ),
             ),
-            onSelected: (int value) {
-
-            },
+            onSelected: (int value) {},
             itemBuilder: (context) => [
-
-                PopupMenuItem(
-                  value: 5,
+              PopupMenuItem(
+                value: 0,
+                child: InkWell(
+                  onTap: () {
+                    playListInputDialog(context);
+                  },
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.album_rounded,
+                      Icon(
+                        Icons.playlist_add,
+                        color: Theme.of(context).iconTheme.color,
                       ),
                       const SizedBox(width: 10.0),
                       Text(
-                     'viewAlbum',
+                        'addToPlaylist',
                       ),
                     ],
                   ),
                 ),
+              ),
               PopupMenuItem(
-                value: 0,
+                value: 2,
                 child: Row(
                   children: [
-                    Icon(
-                      Icons.playlist_add_rounded,
-                      color: Theme.of(context).iconTheme.color,
+                    const Icon(
+                      Icons.album_rounded,
+                      color: Colors.black,
                     ),
                     const SizedBox(width: 10.0),
                     Text(
-                      'addToPlaylist',
+                      'viewAlbum',
                     ),
                   ],
                 ),
               ),
-
               PopupMenuItem(
-                value: 10,
+                value: 3,
                 child: Row(
                   children: [
                     Icon(
@@ -101,16 +98,16 @@ int valueHolder = 20;
                     ),
                     const SizedBox(width: 10.0),
                     Text(
-                     'songInfo',
+                      'songInfo',
                     ),
                   ],
                 ),
               ),
             ],
-          )
+          ),
         ],
       ),
-      body:Column(
+      body: Column(
         children: [
           Expanded(
             child: Container(
@@ -129,45 +126,59 @@ int valueHolder = 20;
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-               Icon(Icons.favorite_border_outlined ,color: Colors.white,),
-                Text(
-                  "Mercy Chinwo",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.favorite_border_outlined,
+                    color: Colors.white,
+                  ),
+                ),
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    widget.songInfo.title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
                       fontSize: 24.sp,
                       color: Colors.white,
                       fontStyle: FontStyle.normal,
                       fontWeight: FontWeight.w600,
-
+                    ),
                   ),
                 ),
-               Icon(Icons.download_outlined,color: Colors.white,)
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.download_outlined,
+                      color: Colors.white,
+                    ))
               ],
             ),
           ),
           SizedBox(height: 5.h),
           Text(
-            "Minister GUC",
+            widget.songInfo.artist,
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 14.sp,
-                color: Colors.white,
-                fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w400,
-              ),
+              fontSize: 14.sp,
+              color: Colors.white,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w400,
             ),
-
+          ),
           SizedBox(height: 50.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 36.w),
             child: SliderTheme(
-              data: SliderThemeData(
-                  overlayShape: SliderComponentShape.noOverlay),
+              data:
+                  SliderThemeData(overlayShape: SliderComponentShape.noOverlay),
               child: Slider(
-                  value: valueHolder.toDouble(),
+                  value: (valueHolder =
+                          parsetominsec(int.parse(widget.songInfo.duration)))
+                      .toDouble(),
                   min: 1,
-                  max: 100,
-                  divisions: 100,
+                  max: 2100,
+                  divisions: 2100,
                   activeColor: Colors.white,
                   inactiveColor: const Color(0x4fffffff),
                   label: '${valueHolder.round()}',
@@ -190,23 +201,21 @@ int valueHolder = 20;
                 Text(
                   "01:35",
                   textAlign: TextAlign.left,
-                  style:  TextStyle(
-                      fontSize: 18.sp,
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                    ),
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    color: Colors.white,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w400,
                   ),
-
+                ),
                 Text(
                   "03:38",
                   textAlign: TextAlign.right,
-                  style:TextStyle(
-                      fontSize: 18.sp,
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-
+                  style: TextStyle(
+                    fontSize: 18.sp,
+                    color: Colors.white,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w400,
                   ),
                 )
               ],
@@ -218,18 +227,19 @@ int valueHolder = 20;
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.shuffle_outlined,color: Colors.white),
-                Icon(Icons.skip_previous_outlined,color: Colors.white),
-
-
+                Icon(Icons.shuffle_outlined, color: Colors.white),
+                Icon(Icons.skip_previous_outlined, color: Colors.white),
                 Container(
                   width: 74.w,
                   height: 74.w,
-                  child: Icon(Icons.pause_circle_filled_outlined,color: Colors.white, size: 40,),
+                  child: Icon(
+                    Icons.pause_circle_filled_outlined,
+                    color: Colors.white,
+                    size: 40,
+                  ),
                 ),
-                Icon(Icons.skip_next_outlined,color: Colors.white),
-                Icon(Icons.repeat,color: Colors.white),
-
+                Icon(Icons.skip_next_outlined, color: Colors.white),
+                Icon(Icons.repeat, color: Colors.white),
               ],
             ),
           ),
@@ -239,4 +249,3 @@ int valueHolder = 20;
     );
   }
 }
-

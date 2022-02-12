@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/ui/screen/account_collection_screen/album_collection.dart';
 import 'package:musicapp/ui/screen/account_collection_screen/artist_collection.dart';
 import 'package:musicapp/ui/screen/account_collection_screen/my_playlist.dart';
+import 'package:musicapp/ui/screen/account_collection_screen/edit_account.dart';
 import 'package:musicapp/ui/screen/account_collection_screen/song_collection.dart';
-import 'package:musicapp/ui/screen/main_screen/setting.dart';
+import 'package:musicapp/ui/screen/account_collection_screen/setting.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
 
 class Account extends StatefulWidget {
@@ -39,7 +39,9 @@ class _AccountState extends State<Account> {
                         fontSize: 48.sp),
                   ),
                   IconButton(
-                    onPressed: (){RouterClass.routerClass.pushWidget(Setting());},
+                    onPressed: () {
+                      RouterClass.routerClass.pushWidget(Setting());
+                    },
                     icon: const Icon(Icons.settings),
                     color: Colors.white,
                   ),
@@ -118,7 +120,9 @@ class _AccountState extends State<Account> {
                   defaultButton(
                     text: "Edit",
                     width: 78.w,
-                    function: () {},
+                    function: () {
+                      RouterClass.routerClass.pushWidget(EditAccount());
+                    },
                     height: 28,
                     radius: 2,
                   )

@@ -12,14 +12,14 @@ class RouterClass {
   }
 
   pushWidget(Widget widget) {
-    BuildContext context = navKey.currentState.context;
+    // BuildContext context= navKey.currentState.context;
     navKey.currentState.push(MaterialPageRoute(builder: (context) {
       return widget;
     }));
   }
 
   pushWidgetReplacement(Widget widget) {
-    BuildContext context = navKey.currentState.context;
+    // BuildContext context = navKey.currentState.context;
     navKey.currentState.pushReplacement(MaterialPageRoute(builder: (context) {
       return widget;
     }));

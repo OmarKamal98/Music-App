@@ -1,11 +1,12 @@
-
 import 'package:blur/blur.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_query/flutter_audio_query.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
+import 'package:musicapp/ui/widget/component/song_card_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -119,7 +120,8 @@ class _HomeState extends State<HomeScreen> {
                             ),
                           ),
                           Padding(
-                              padding: const EdgeInsets.only(bottom: 15, right: 15),
+                              padding:
+                                  const EdgeInsets.only(bottom: 15, right: 15),
                               child: Image.asset('assets/images/splash1.png')
                                   .blurred(
                                 borderRadius: BorderRadius.circular(5),
@@ -182,8 +184,8 @@ class _HomeState extends State<HomeScreen> {
                                 return Stack(
                                   children: [
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.only(top: 15, left: 15),
+                                      padding: const EdgeInsets.only(
+                                          top: 15, left: 15),
                                       child: Image.asset(
                                               'assets/images/splash1.png')
                                           .blurred(
@@ -230,28 +232,35 @@ class _HomeState extends State<HomeScreen> {
                   ),
                 ),
 
-              Container(
-                height: 400,
-                  child: ListView.builder(
-                    scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: 10,
-                      itemBuilder: (context,index){
-                        return  cardMusic(
-                            onTapFun: () {},
-                            image: Image.asset('assets/images/splash1.png'),
-                            title: const Text(
-                              "absd",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            subtitle: const Text(
-                              "absd",
-                              style: const TextStyle(color: Colors.white),
-                            ));
-                      },
-
-
-                    ),
+                Container(
+                  height: 400,
+                  child: FutureBuilder(
+                    future: FlutterAudioQuery()
+                        .getSongs(sortType: SongSortType.ALPHABETIC_ALBUM),
+                    builder: (context, snapshot) {
+                      List<SongInfo> songInfo = snapshot.data;
+                      if (snapshot.hasData)
+                        return SongWidget(songList: songInfo);
+                      return Container(
+                        height: MediaQuery.of(context).size.height * 0.4,
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              CircularProgressIndicator(),
+                              SizedBox(
+                                width: 20,
+                              ),
+                              Text(
+                                "Loading....",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
 
                 // SingleChildScrollView(

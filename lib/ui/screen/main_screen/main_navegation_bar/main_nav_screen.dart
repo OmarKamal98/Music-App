@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musicapp/audio_player_asset.dart';
 import 'package:musicapp/ui/screen/main_screen/account.dart';
-import 'package:musicapp/ui/screen/main_screen/explore_screen.dart';
 import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
 import 'package:musicapp/ui/screen/main_screen/my_music.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -79,6 +78,6 @@ class MainNav extends StatelessWidget {
   }
 
   List<Widget> _buildScreens() {
-    return [HomeScreen(), ExploreScreen(), MyMusicScreen(), Account()];
+    return [HomeScreen(), PlayAudioAssets(), MyMusicScreen(), Account()];
   }
 }

@@ -1,5 +1,6 @@
 class ApiConstant {
-  static final String baseUrl = 'https://rapidapi.com/Glavier/api/spotify23/';
-  static final String getAlbums = 'albums';
-  static String getOneProduct(int productId) => 'products/$productId';
+  static final String baseUrl = '';
+  static final String getAllAlbum = '';
+  static final String getAllArtist = '';
+  static final String getAllSongs = '';
 }
