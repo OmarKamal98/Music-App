@@ -37,62 +37,70 @@ class _SplashState extends State<Splash> {
     });
     return Scaffold(
       backgroundColor: const Color(0xFF0E0B1F),
-      body: Column(
-        children: [
-          Column(children: [
-            CarouselSlider.builder(
-                itemCount: splashImg.length,
-                itemBuilder: (BuildContext context, int index, int realIndex) {
-                  return Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.symmetric(horizontal: 1),
-                    child: Image.asset(
-                      splashImg[index],
-                      fit: BoxFit.cover,
-                    ),
-                  );
-                },
-                options: CarouselOptions(
-                  height: 407,
-                  initialPage: 0,
-                  enlargeCenterPage: true,
-                  aspectRatio: 2.0,
-                  autoPlay: true,
-                    autoPlayInterval : const Duration(milliseconds: 1000),
-                  autoPlayAnimationDuration: const Duration(seconds: 1),
-
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/splashcover.webp'),
+                fit: BoxFit.cover)),
+        child: Column(
+          children: [
+            Column(children: [
+              CarouselSlider.builder(
+                  itemCount: splashImg.length,
+                  itemBuilder:
+                      (BuildContext context, int index, int realIndex) {
+                    return Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(horizontal: 1),
+                      child: Image.asset(
+                        splashImg[index],
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                  options: CarouselOptions(
+                    height: 407,
+                    initialPage: 0,
+                    enlargeCenterPage: true,
+                    aspectRatio: 2.0,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(milliseconds: 1000),
+                    autoPlayAnimationDuration: const Duration(seconds: 1),
+                  )),
+            ]),
+            Container(
+                margin: EdgeInsets.only(top: 111.h, left: 40.w),
+                child: Text(
+                  "WELCOME TO                          GEEZ APP",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 37.sp),
                 )),
-          ]),
-          Container(
-              margin: EdgeInsets.only(top: 111.h, left: 40.w),
-              child: Text(
-                "WELCOME TO                          GEEZ APP",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 37.sp),
-              )),
-          SizedBox(
-            height: 70.h,
-          ),
-          Padding(
-            padding: EdgeInsets.all(40.h),
-            child: defaultButton(
-                text: "GET STARTED",
-                radius: 2,
-                width: double.infinity,
-                function: () {
-                  User user = FirebaseAuth.instance.currentUser;
-                  if (user == null) {
-                    RouterClass.routerClass.pushWidgetReplacement(SignUp());
-                  } else {
-                    Provider.of<AuthProvider>(context, listen: false)
-                        .getUserFromFirebase();
-                    RouterClass.routerClass.pushWidgetReplacement(MainNav());
-                  }
-                }),
-          )
-        ],
+            SizedBox(
+              height: 70.h,
+            ),
+            Padding(
+              padding: EdgeInsets.all(40.h),
+              child: defaultButton(
+                  text: "GET STARTED",
+                  radius: 2,
+                  width: double.infinity,
+                  function: () {
+                    User user = FirebaseAuth.instance.currentUser;
+                    if (user == null) {
+                      RouterClass.routerClass.pushWidgetReplacement(SignUp());
+                    } else {
+                      Provider.of<AuthProvider>(context, listen: false)
+                          .getUserFromFirebase();
+                      RouterClass.routerClass.pushWidgetReplacement(MainNav());
+                    }
+                  }),
+            )
+          ],
+        ),
       ),
     );
   }

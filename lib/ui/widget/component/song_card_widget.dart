@@ -1,16 +1,23 @@
 import 'dart:developer';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/ui/screen/main_screen/player_screen.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
 
+Duration _position = new Duration();
+final AudioPlayer audioPlayer = AudioPlayer();
+bool isPlaying = false;
+
+// audioPlayer.positionHandler = (p) => setState(() {
+// _position = p;
+// });
+
 class SongWidget extends StatelessWidget {
   final List<SongInfo> songList;
   SongWidget({this.songList});
-  // bool isStarted = false;
-  // TextEditingController controllerd = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +41,14 @@ class SongWidget extends StatelessWidget {
                 child: ListTile(
                   leading: InkWell(
                     onTap: () {
+                      if (!isPlaying) {
+                        audioPlayer.play('file://${song.filePath}',
+                            isLocal: true);
+                        isPlaying = true;
+                      } else {
+                        audioPlayer.stop();
+                        isPlaying = false;
+                      }
                       RouterClass.routerClass.pushWidget(PlayerScreen(song));
                     },
                     child: Container(
@@ -205,16 +220,6 @@ class SongWidget extends StatelessWidget {
     //         height: 0,
     //       );
     //     });
-  }
-
-  static String Parsetominsec(int ms) {
-    String data;
-    Duration duration = Duration(milliseconds: ms);
-    int min = duration.inMinutes;
-    int sec = (duration.inSeconds) - (min * 60);
-    data = min.toString() + ":" + sec.toString();
-
-    return data;
   }
 }
 

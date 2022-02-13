@@ -1,28 +1,61 @@
+import 'dart:async';
+
+import 'package:audio_service/audio_service.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
+import 'package:musicapp/ui/widget/component/seek_bar.dart';
+import 'package:musicapp/ui/widget/component/song_card_widget.dart';
 
 class PlayerScreen extends StatefulWidget {
   SongInfo songInfo;
   PlayerScreen(this.songInfo, {Key key}) : super(key: key);
 
   @override
+  @override
   _PlayerScreenState createState() => _PlayerScreenState();
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  static int parsetominsec(int ms) {
-    // String data;
+  static String Parsetominsec(int ms) {
+    String data;
     Duration duration = Duration(milliseconds: ms);
-    // int min = duration.inMinutes;
-    int sec = duration.inSeconds;
-    // data = min.toString() + ":" + sec.toString();
+    int min = duration.inMinutes;
+    int sec = (duration.inSeconds) - (min * 60);
+    data = min.toString() + ":" + sec.toString();
 
-    return sec;
+    return data;
   }
 
-  int valueHolder = 1;
+  String currentTime = "00:00";
+  String completeTime = "00:00";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    audioPlayer.onAudioPositionChanged.listen((Duration duration) {
+      setState(() {
+        currentTime = duration.toString().split(".")[0];
+      });
+    });
+
+    audioPlayer.onDurationChanged.listen((Duration duration) {
+      setState(() {
+        completeTime = duration.toString().split(".")[0];
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,14 +168,19 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 ),
                 SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
-                  child: Text(
-                    widget.songInfo.title,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24.sp,
-                      color: Colors.white,
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w600,
+                  child: Container(
+                    width: 200,
+                    child: Text(
+                      widget.songInfo.title,
+                      overflow: TextOverflow.clip,
+                      maxLines: 1,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 24.sp,
+                        color: Colors.white,
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
@@ -167,31 +205,42 @@ class _PlayerScreenState extends State<PlayerScreen> {
             ),
           ),
           SizedBox(height: 50.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36.w),
-            child: SliderTheme(
-              data:
-                  SliderThemeData(overlayShape: SliderComponentShape.noOverlay),
-              child: Slider(
-                  value: (valueHolder =
-                          parsetominsec(int.parse(widget.songInfo.duration)))
-                      .toDouble(),
-                  min: 1,
-                  max: 2100,
-                  divisions: 2100,
-                  activeColor: Colors.white,
-                  inactiveColor: const Color(0x4fffffff),
-                  label: '${valueHolder.round()}',
-                  onChanged: (double newValue) {
-                    setState(() {
-                      valueHolder = newValue.round();
-                    });
-                  },
-                  semanticFormatterCallback: (double newValue) {
-                    return '${newValue.round()}';
-                  }),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(horizontal: 36.w),
+          //   child:
+          //
+          //   // SeekBar(duration: duration, position: position)
+          //   // Slider(
+          //   //     value: position?.inMilliseconds?.toDouble() ?? 0.0,
+          //   //     onChanged: (double value) {
+          //   //       return audioPlayer.seek((value / 1000.0).roundToDouble());
+          //   //     },
+          //   //     min: 0.0,
+          //   //     max: duration.inMilliseconds.toDouble()),
+          //   // child: SliderTheme(
+          //   //   data:
+          //   //       SliderThemeData(overlayShape: SliderComponentShape.noOverlay),
+          //   //   child: Slider(
+          //   //       // value: ,
+          //   //       min: 0.0,
+          //   //       max: int.parse(
+          //   //               Parsetominsec(int.parse(widget.songInfo.duration)))
+          //   //           .toDouble(),
+          //   //       divisions: 2100,
+          //   //       activeColor: Colors.white,
+          //   //       inactiveColor: const Color(0x4fffffff),
+          //   //       label: '${valueHolder.round()}',
+          //   //       onChanged: (double newValue) {
+          //   //         setState(() {
+          //   //           valueHolder = newValue.round();
+          //   //           audioPlayer.seek(Duration(milliseconds: valueHolder));
+          //   //         });
+          //   //       },
+          //   //       semanticFormatterCallback: (double newValue) {
+          //   //         return '${newValue.round()}';
+          //   //       }),
+          //   // ),
+          // ),
           SizedBox(height: 10.h),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 36.w),
@@ -199,7 +248,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "01:35",
+                  currentTime,
                   textAlign: TextAlign.left,
                   style: TextStyle(
                     fontSize: 18.sp,
@@ -209,7 +258,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                   ),
                 ),
                 Text(
-                  "03:38",
+                  Parsetominsec(int.parse(widget.songInfo.duration)),
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     fontSize: 18.sp,
@@ -232,13 +281,33 @@ class _PlayerScreenState extends State<PlayerScreen> {
                 Container(
                   width: 74.w,
                   height: 74.w,
-                  child: Icon(
-                    Icons.pause_circle_filled_outlined,
-                    color: Colors.white,
-                    size: 40,
+                  child: IconButton(
+                    onPressed: () {
+                      if (isPlaying) {
+                        audioPlayer.pause();
+                        setState(() {
+                          isPlaying = false;
+                        });
+                      } else {
+                        audioPlayer.resume();
+
+                        setState(() {
+                          isPlaying = true;
+                        });
+                      }
+                    },
+                    icon: Icon(
+                      isPlaying
+                          ? Icons.pause_circle_filled_outlined
+                          : Icons.play_circle_fill,
+                      color: Colors.white,
+                      size: 75,
+                    ),
                   ),
                 ),
-                Icon(Icons.skip_next_outlined, color: Colors.white),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.skip_next_outlined, color: Colors.white)),
                 Icon(Icons.repeat, color: Colors.white),
               ],
             ),

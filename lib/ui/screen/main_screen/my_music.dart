@@ -1,10 +1,8 @@
-// import 'package:audio_manager/audio_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:musicapp/ui/widget/component/artist_device_widget.dart';
 import 'package:musicapp/ui/widget/component/playlist_device_widget.dart';
 import 'package:musicapp/ui/widget/component/song_card_widget.dart';
-import 'package:musicapp/ui/widget/custom_physics.dart';
 import 'package:musicapp/ui/widget/gradient_containers.dart';
 import '../../widget/component/album_device_widget.dart';
 
@@ -59,13 +57,13 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
         children: [
           Expanded(
             child: DefaultTabController(
-              length: 3,
+              length: 4,
               child: Scaffold(
                 backgroundColor: Colors.transparent,
                 appBar: AppBar(
                   title: const Text('myMusic'),
                   bottom: TabBar(
-                    // isScrollable: true,
+                    isScrollable: true,
                     controller: _tcontroller,
                     tabs: [
                       Tab(
@@ -77,6 +75,9 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
                       Tab(
                         text: 'Artist',
                       ),
+                      Tab(
+                        text: 'Playlist',
+                      ),
                     ],
                   ),
                   centerTitle: true,
@@ -84,12 +85,13 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
                   elevation: 5,
                 ),
                 body: TabBarView(
-                  physics: const CustomPhysics(),
+                  // physics: const CustomPhysics(),
                   controller: _tcontroller,
                   children: [
                     GetSongFromDevice(),
                     GetAlbumFromDevice(),
                     GetArtistFromDevice(),
+                    GetPlayListFromDevice()
                   ],
                 ),
               ),
@@ -101,15 +103,6 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
     );
   }
 
-  // String _formatDuration(Duration d) {
-  //   if (d == null) return "--:--";
-  //   int minute = d.inMinutes;
-  //   int second = (d.inSeconds > 60) ? (d.inSeconds % 60) : d.inSeconds;
-  //   String format = ((minute < 10) ? "0$minute" : "$minute") +
-  //       ":" +
-  //       ((second < 10) ? "0$second" : "$second");
-  //   return format;
-  // }
   //
   // Widget songProgress(BuildContext context) {
   //   TextStyle style = TextStyle(color: Colors.black);
@@ -221,7 +214,7 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
   //   ]);
   // }
 }
-//
+
 // AudioManager audioManagerInstance = AudioManager.instance;
 // bool showVol = false;
 // PlayMode playMode = audioManagerInstance.playMode;
@@ -239,7 +232,7 @@ class GetSongFromDevice extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              height: 500,
+              height: 620,
               child: FutureBuilder(
                 future: FlutterAudioQuery()
                     .getSongs(sortType: SongSortType.ALPHABETIC_ALBUM),
@@ -388,31 +381,29 @@ class GetPlayListFromDevice extends StatelessWidget {
                 future: FlutterAudioQuery().getPlaylists(),
                 builder: (context, snapshot) {
                   List<PlaylistInfo> playlistInfo = snapshot.data;
-                  if (snapshot.hasData) {
-                    return PlaylistDeviceidget(
-                      playlistsInfo: playlistInfo,
-                    );
-                  }
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          CircularProgressIndicator(),
-                          SizedBox(
-                            width: 20,
+
+                  return playlistInfo?.length != 0
+                      ? PlaylistDeviceidget(playlistsInfo: playlistInfo)
+                      : Container(
+                          height: MediaQuery.of(context).size.height * 0.4,
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                CircularProgressIndicator(),
+                                SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  "Loading....",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white),
+                                )
+                              ],
+                            ),
                           ),
-                          Text(
-                            "Loading....",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
+                        );
                 },
               ),
             ),

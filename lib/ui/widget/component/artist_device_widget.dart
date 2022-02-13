@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/ui/screen/local_music_screen/artist_detail_in_device.dart';
 
 class ArtisteDeviceWidget extends StatelessWidget {
   List<ArtistInfo> artistsInfo = [];
@@ -14,9 +16,9 @@ class ArtisteDeviceWidget extends StatelessWidget {
           ArtistInfo artistInfo = artistsInfo[ind];
           return InkWell(
             onTap: () {
-              // RouterClass.routerClass.pushWidget(AlbumDetailLocal(
-              //   albumInfo: album,
-              // ));
+              RouterClass.routerClass.pushWidget(ArtistDetailLocal(
+                artistInfo: artistInfo,
+              ));
             },
             child: Container(
               width: 100,
