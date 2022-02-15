@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -38,7 +39,7 @@ class _SignUpState extends State<SignUp> {
 
   String nullValidator(String value) {
     if (value.isEmpty) {
-      return 'Required Field';
+      return 'RequiredField'.tr();
     }
     return null;
   }
@@ -61,7 +62,7 @@ class _SignUpState extends State<SignUp> {
             Padding(
               padding: EdgeInsets.only(top: 60.h, left: 40.w),
               child: Text(
-                'SIGN UP',
+                'SignUp'.tr(),
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 36,
@@ -74,7 +75,7 @@ class _SignUpState extends State<SignUp> {
               margin: EdgeInsets.only(top: 64.h, left: 40.w, right: 40.w),
               child: WidgetTextField(
                 validationFun: nullValidator,
-                hintText: 'Name',
+                hintText: 'Name'.tr(),
                 inputType: TextInputType.name,
                 controller: nameController,
                 icon: Icon(
@@ -89,7 +90,7 @@ class _SignUpState extends State<SignUp> {
               margin: EdgeInsets.only(top: 64.h, left: 40.w, right: 40.w),
               child: WidgetTextField(
                 validationFun: validateEmail,
-                hintText: 'E-Mail',
+                hintText: 'E-Mail'.tr(),
                 inputType: TextInputType.emailAddress,
                 controller: emailController,
                 icon: Icon(
@@ -109,7 +110,7 @@ class _SignUpState extends State<SignUp> {
                   return null;
                 },
                 isPassword: isPass,
-                hintText: 'Password',
+                hintText: 'Password'.tr(),
                 inputType: TextInputType.visiblePassword,
                 controller: passController,
                 endIconFunction: () {
@@ -127,7 +128,7 @@ class _SignUpState extends State<SignUp> {
                 height: 46.h,
                 margin: EdgeInsets.only(left: 40.w, right: 40.w, top: 66.h),
                 child: defaultButton(
-                    text: "Sign up",
+                    text: "SignUp".tr(),
                     radius: 2,
                     width: double.infinity,
                     function: () {
@@ -138,21 +139,7 @@ class _SignUpState extends State<SignUp> {
                       );
                       Provider.of<AuthProvider>(context, listen: false)
                           .createUser(user);
-                    })
-                // ElevatedButton(
-                //   onPressed: () {},
-                //   child: Text(
-                //     'SIGN UP',
-                //     style: TextStyle(
-                //         fontSize: 16.sp,
-                //         color: Colors.black,
-                //         fontWeight: FontWeight.bold),
-                //   ),
-                //   style: ElevatedButton.styleFrom(
-                //     primary: Color(0xFFCBFB5E),
-                //   ),
-                // ),
-                ),
+                    })),
             Container(
               margin: EdgeInsets.only(top: 64.h),
               child: Column(
@@ -169,7 +156,7 @@ class _SignUpState extends State<SignUp> {
                         ),
                       ),
                       Text(
-                        "Or connect with",
+                        "connectwith".tr(),
                         style: TextStyle(color: Colors.blueGrey),
                       ),
                       Expanded(
@@ -216,15 +203,15 @@ class _SignUpState extends State<SignUp> {
               child: Row(
                 children: [
                   Text(
-                    'Do you have an account?',
+                    'haveaccount'.tr(),
                     style: TextStyle(color: Colors.white),
                   ),
                   TextButton(
                       onPressed: () {
                         RouterClass.routerClass.pushByName('login');
                       },
-                      child: const Text(
-                        'Sign In',
+                      child: Text(
+                        'signIn'.tr(),
                         style: TextStyle(
                             color: Color(0xFFCBFB5E),
                             fontWeight: FontWeight.w900),

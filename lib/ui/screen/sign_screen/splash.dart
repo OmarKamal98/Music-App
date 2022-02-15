@@ -5,10 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/provider/auth_provider.dart';
 import 'package:musicapp/ui/screen/main_screen/main_navegation_bar/main_nav_screen.dart';
-import 'package:musicapp/ui/screen/sign_screen/login.dart';
 import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class Splash extends StatefulWidget {
   const Splash({Key key}) : super(key: key);
@@ -26,12 +26,12 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration(seconds: 8)).then((v) {
+    Future.delayed(Duration(seconds: 5)).then((v) {
       User user = FirebaseAuth.instance.currentUser;
       if (user == null) {
         RouterClass.routerClass.pushWidgetReplacement(SignUp());
       } else {
-        Provider.of<AuthProvider>(context, listen: false).getUserFromFirebase();
+        // Provider.of<AuthProvider>(context, listen: false).getUserFromFirebase();
         RouterClass.routerClass.pushWidgetReplacement(MainNav());
       }
     });
@@ -61,7 +61,7 @@ class _SplashState extends State<Splash> {
                     );
                   },
                   options: CarouselOptions(
-                    height: 407,
+                    height: 400,
                     initialPage: 0,
                     enlargeCenterPage: true,
                     aspectRatio: 2.0,
@@ -71,21 +71,21 @@ class _SplashState extends State<Splash> {
                   )),
             ]),
             Container(
-                margin: EdgeInsets.only(top: 111.h, left: 40.w),
+                margin: EdgeInsets.only(top: 100.h, left: 40.w, right: 20.w),
                 child: Text(
-                  "WELCOME TO                          GEEZ APP",
+                  "welcome".tr(),
                   style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 37.sp),
                 )),
             SizedBox(
-              height: 70.h,
+              height: 60.h,
             ),
             Padding(
               padding: EdgeInsets.all(40.h),
               child: defaultButton(
-                  text: "GET STARTED",
+                  text: 'started'.tr(),
                   radius: 2,
                   width: double.infinity,
                   function: () {

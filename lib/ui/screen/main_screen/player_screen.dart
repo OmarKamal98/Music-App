@@ -1,54 +1,60 @@
-import 'dart:async';
-
-import 'package:audio_service/audio_service.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:just_audio/just_audio.dart';
+import 'package:marquee/marquee.dart';
+import 'package:musicapp/ui/widget/component/seekbar_controlbuttons.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
-import 'package:musicapp/ui/widget/component/seek_bar.dart';
-import 'package:musicapp/ui/widget/component/song_card_widget.dart';
+import 'package:audio_session/audio_session.dart';
+import 'package:flutter/services.dart';
+import 'package:rxdart/rxdart.dart';
 
+//
+// Duration _position = new Duration();
+// final AudioPlayer audioPlayer = AudioPlayer();
+// bool isPlaying = true;
+final _player = AudioPlayer();
+
+// ignore: must_be_immutable
 class PlayerScreen extends StatefulWidget {
   SongInfo songInfo;
-  PlayerScreen(this.songInfo, {Key key}) : super(key: key);
-
-  @override
+  int index;
+  PlayerScreen(this.index, this.songInfo, {Key key}) : super(key: key);
   @override
   _PlayerScreenState createState() => _PlayerScreenState();
 }
 
 class _PlayerScreenState extends State<PlayerScreen> {
-  static String Parsetominsec(int ms) {
-    String data;
-    Duration duration = Duration(milliseconds: ms);
-    int min = duration.inMinutes;
-    int sec = (duration.inSeconds) - (min * 60);
-    data = min.toString() + ":" + sec.toString();
-
-    return data;
-  }
-
-  String currentTime = "00:00";
-  String completeTime = "00:00";
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    // WidgetsBinding.instance?.addObserver(this);
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.black,
+    ));
+    _init();
+  }
 
-    audioPlayer.onAudioPositionChanged.listen((Duration duration) {
-      setState(() {
-        currentTime = duration.toString().split(".")[0];
-      });
+  Future<void> _init() async {
+    // Inform the operating system of our app's audio attributes etc.
+    // We pick a reasonable default for an app that plays speech.
+    final session = await AudioSession.instance;
+    await session.configure(AudioSessionConfiguration.speech());
+    // Listen to errors during playback.
+    _player.playbackEventStream.listen((event) {},
+        onError: (Object e, StackTrace stackTrace) {
+      print('A stream error occurred: $e');
     });
-
-    audioPlayer.onDurationChanged.listen((Duration duration) {
-      setState(() {
-        completeTime = duration.toString().split(".")[0];
-      });
-    });
+    // Try to load audio from a source and catch any errors.
+    try {
+      await _player.stop();
+      await _player
+          .setAudioSource(AudioSource.uri(Uri.parse(widget.songInfo.uri)));
+      await _player.play();
+    } catch (e) {
+      print("Error loading audio source: $e");
+    }
   }
 
   @override
@@ -56,6 +62,14 @@ class _PlayerScreenState extends State<PlayerScreen> {
     // TODO: implement dispose
     super.dispose();
   }
+
+  Stream<PositionData> get _positionDataStream =>
+      Rx.combineLatest3<Duration, Duration, Duration, PositionData>(
+          _player.positionStream,
+          _player.bufferedPositionStream,
+          _player.durationStream,
+          (position, bufferedPosition, duration) => PositionData(
+              position, bufferedPosition, duration ?? Duration.zero));
 
   @override
   Widget build(BuildContext context) {
@@ -87,27 +101,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
             onSelected: (int value) {},
             itemBuilder: (context) => [
               PopupMenuItem(
-                value: 0,
-                child: InkWell(
-                  onTap: () {
-                    playListInputDialog(context);
-                  },
-                  child: Row(
-                    children: [
-                      Icon(
-                        Icons.playlist_add,
-                        color: Theme.of(context).iconTheme.color,
-                      ),
-                      const SizedBox(width: 10.0),
-                      Text(
-                        'addToPlaylist',
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              PopupMenuItem(
-                value: 2,
+                value: 1,
                 child: Row(
                   children: [
                     const Icon(
@@ -116,13 +110,13 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     ),
                     const SizedBox(width: 10.0),
                     Text(
-                      'viewAlbum',
+                      'viewAlbum'.tr(),
                     ),
                   ],
                 ),
               ),
               PopupMenuItem(
-                value: 3,
+                value: 2,
                 child: Row(
                   children: [
                     Icon(
@@ -131,7 +125,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     ),
                     const SizedBox(width: 10.0),
                     Text(
-                      'songInfo',
+                      'songInfo'.tr(),
                     ),
                   ],
                 ),
@@ -144,16 +138,37 @@ class _PlayerScreenState extends State<PlayerScreen> {
         children: [
           Expanded(
             child: Container(
+              width: MediaQuery.of(context).size.width - 35,
               padding: EdgeInsets.only(top: 16.h, left: 20.w, right: 20.w),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(200),
                 image: DecorationImage(
-                  image: AssetImage('assets/images/splash1.png'),
+                  image: AssetImage('assets/images/cover.jpg'),
                   fit: BoxFit.contain,
                 ),
               ),
             ),
           ),
-          SizedBox(height: 22.h),
+          SizedBox(height: 27.h),
+          Container(
+            height: 40.h,
+            padding: EdgeInsets.only(left: 39.w, right: 39.w),
+            child: buildAnimationText(widget.songInfo.title),
+          ),
+          SizedBox(height: 7.h),
+          Text(
+            widget.songInfo.artist == '<unknown>'
+                ? 'unknown'.tr()
+                : widget.songInfo.artist,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: Colors.white,
+              fontStyle: FontStyle.normal,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          SizedBox(height: 20.h),
           Padding(
             padding: EdgeInsets.only(left: 39.w, right: 39.w),
             child: Row(
@@ -166,155 +181,88 @@ class _PlayerScreenState extends State<PlayerScreen> {
                     color: Colors.white,
                   ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Container(
-                    width: 200,
-                    child: Text(
-                      widget.songInfo.title,
-                      overflow: TextOverflow.clip,
-                      maxLines: 1,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 24.sp,
-                        color: Colors.white,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.playlist_add,
+                    color: Colors.white,
                   ),
                 ),
                 IconButton(
-                    onPressed: () {},
-                    icon: Icon(
-                      Icons.download_outlined,
-                      color: Colors.white,
-                    ))
-              ],
-            ),
-          ),
-          SizedBox(height: 5.h),
-          Text(
-            widget.songInfo.artist,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 14.sp,
-              color: Colors.white,
-              fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-          SizedBox(height: 50.h),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(horizontal: 36.w),
-          //   child:
-          //
-          //   // SeekBar(duration: duration, position: position)
-          //   // Slider(
-          //   //     value: position?.inMilliseconds?.toDouble() ?? 0.0,
-          //   //     onChanged: (double value) {
-          //   //       return audioPlayer.seek((value / 1000.0).roundToDouble());
-          //   //     },
-          //   //     min: 0.0,
-          //   //     max: duration.inMilliseconds.toDouble()),
-          //   // child: SliderTheme(
-          //   //   data:
-          //   //       SliderThemeData(overlayShape: SliderComponentShape.noOverlay),
-          //   //   child: Slider(
-          //   //       // value: ,
-          //   //       min: 0.0,
-          //   //       max: int.parse(
-          //   //               Parsetominsec(int.parse(widget.songInfo.duration)))
-          //   //           .toDouble(),
-          //   //       divisions: 2100,
-          //   //       activeColor: Colors.white,
-          //   //       inactiveColor: const Color(0x4fffffff),
-          //   //       label: '${valueHolder.round()}',
-          //   //       onChanged: (double newValue) {
-          //   //         setState(() {
-          //   //           valueHolder = newValue.round();
-          //   //           audioPlayer.seek(Duration(milliseconds: valueHolder));
-          //   //         });
-          //   //       },
-          //   //       semanticFormatterCallback: (double newValue) {
-          //   //         return '${newValue.round()}';
-          //   //       }),
-          //   // ),
-          // ),
-          SizedBox(height: 10.h),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 36.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  currentTime,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 18.sp,
+                  icon: Icon(
+                    Icons.volume_up,
                     color: Colors.white,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400,
+                  ),
+                  onPressed: () {
+                    showSliderDialog(
+                      context: context,
+                      title: "volume".tr(),
+                      divisions: 10,
+                      min: 0.0,
+                      max: 1.0,
+                      value: _player.volume,
+                      stream: _player.volumeStream,
+                      onChanged: _player.setVolume,
+                    );
+                  },
+                ),
+                StreamBuilder<double>(
+                  stream: _player.speedStream,
+                  builder: (context, snapshot) => IconButton(
+                    icon: Text("${snapshot.data?.toStringAsFixed(1)}x",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.white)),
+                    onPressed: () {
+                      showSliderDialog(
+                        context: context,
+                        title: "speed".tr(),
+                        divisions: 10,
+                        min: 0.5,
+                        max: 1.5,
+                        value: _player.speed,
+                        stream: _player.speedStream,
+                        onChanged: _player.setSpeed,
+                      );
+                    },
                   ),
                 ),
-                Text(
-                  Parsetominsec(int.parse(widget.songInfo.duration)),
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 18.sp,
-                    color: Colors.white,
-                    fontStyle: FontStyle.normal,
-                    fontWeight: FontWeight.w400,
-                  ),
-                )
               ],
             ),
+          ),
+          SizedBox(height: 30.h),
+          StreamBuilder<PositionData>(
+            stream: _positionDataStream,
+            builder: (context, snapshot) {
+              final positionData = snapshot.data;
+              return SeekBar(
+                duration: positionData?.duration ?? Duration.zero,
+                position: positionData?.position ?? Duration.zero,
+                bufferedPosition:
+                    positionData?.bufferedPosition ?? Duration.zero,
+                onChangeEnd: _player.seek,
+              );
+            },
           ),
           SizedBox(height: 24.h),
           Padding(
-            padding: EdgeInsets.only(left: 42.w, right: 42.w),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(Icons.shuffle_outlined, color: Colors.white),
-                Icon(Icons.skip_previous_outlined, color: Colors.white),
-                Container(
-                  width: 74.w,
-                  height: 74.w,
-                  child: IconButton(
-                    onPressed: () {
-                      if (isPlaying) {
-                        audioPlayer.pause();
-                        setState(() {
-                          isPlaying = false;
-                        });
-                      } else {
-                        audioPlayer.resume();
-
-                        setState(() {
-                          isPlaying = true;
-                        });
-                      }
-                    },
-                    icon: Icon(
-                      isPlaying
-                          ? Icons.pause_circle_filled_outlined
-                          : Icons.play_circle_fill,
-                      color: Colors.white,
-                      size: 75,
-                    ),
-                  ),
-                ),
-                IconButton(
-                    onPressed: () {},
-                    icon: Icon(Icons.skip_next_outlined, color: Colors.white)),
-                Icon(Icons.repeat, color: Colors.white),
-              ],
-            ),
+            padding: EdgeInsets.only(left: 25.w, right: 25.w),
+            child: ControlButtons(_player, widget.index),
           ),
           SizedBox(height: 39.h),
         ],
       ),
     );
   }
+
+  Widget buildAnimationText(String text) => Marquee(
+        text: text,
+        style: TextStyle(
+          fontSize: 24.sp,
+          color: Colors.white,
+          fontStyle: FontStyle.normal,
+          fontWeight: FontWeight.w600,
+        ),
+        blankSpace: 50,
+        velocity: -45.0,
+      );
 }

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/ui/screen/local_music_screen/album_detail_in_device.dart';
 
+// ignore: must_be_immutable
 class AlbumDeviceidget extends StatelessWidget {
   List<AlbumInfo> albumInfo;
   AlbumDeviceidget({this.albumInfo});

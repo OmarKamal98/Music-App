@@ -1,12 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/provider/auth_provider.dart';
-import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
-
 import 'package:musicapp/ui/screen/sign_screen/forgot_password.dart';
-import 'package:musicapp/ui/screen/sign_screen/sign_up.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
 import 'package:musicapp/ui/widget/component/social_button_circle.dart';
 import 'package:provider/provider.dart';
@@ -49,7 +47,7 @@ class _LoginState extends State<Login> {
             Padding(
               padding: EdgeInsets.only(top: 60.h, left: 40.w),
               child: Text(
-                'SIGN IN',
+                'signIn'.tr(),
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 36.sp,
@@ -66,7 +64,7 @@ class _LoginState extends State<Login> {
                     return 'InCorrect Email';
                   }
                 },
-                hintText: 'E-Mail',
+                hintText: 'E-Mail'.tr(),
                 inputType: TextInputType.emailAddress,
                 controller: emailController,
                 icon: Icon(
@@ -86,7 +84,7 @@ class _LoginState extends State<Login> {
                   return null;
                 },
                 isPassword: isPass,
-                hintText: 'Password',
+                hintText: 'Password'.tr(),
                 inputType: TextInputType.visiblePassword,
                 controller: passController,
                 endIconFunction: () {
@@ -106,8 +104,8 @@ class _LoginState extends State<Login> {
                   onPressed: () {
                     RouterClass.routerClass.pushWidget(ForgotPassword());
                   },
-                  child: const Text(
-                    'Forgot Password?',
+                  child: Text(
+                    'ForgotPassword'.tr(),
                     style: TextStyle(
                         fontSize: 14,
                         color: Colors.white,
@@ -118,7 +116,7 @@ class _LoginState extends State<Login> {
                 height: 46.h,
                 margin: EdgeInsets.only(left: 40.w, right: 40.w, top: 66.h),
                 child: defaultButton(
-                    text: "Sing in",
+                    text: "signIn".tr(),
                     radius: 2,
                     width: double.infinity,
                     function: () {
@@ -142,7 +140,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Text(
-                        "Or connect with",
+                        "connectwith".tr(),
                         style: TextStyle(color: Colors.blueGrey),
                       ),
                       Expanded(
@@ -189,15 +187,15 @@ class _LoginState extends State<Login> {
               child: Row(
                 children: [
                   Text(
-                    'Don`t have an account?',
+                    'Donhaveaccount'.tr(),
                     style: TextStyle(color: Colors.white),
                   ),
                   TextButton(
                       onPressed: () {
                         RouterClass.routerClass.pushByName('signup');
                       },
-                      child: const Text(
-                        'Sign Up',
+                      child: Text(
+                        'SignUp'.tr(),
                         style: TextStyle(
                             color: Color(0xFFCBFB5E),
                             fontWeight: FontWeight.w900),

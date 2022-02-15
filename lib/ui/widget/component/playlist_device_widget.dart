@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:musicapp/navigator/router_class.dart';
-import 'package:musicapp/ui/screen/local_music_screen/album_detail_in_device.dart';
 
+// ignore: must_be_immutable
 class PlaylistDeviceidget extends StatelessWidget {
   List<PlaylistInfo> playlistsInfo;
   PlaylistDeviceidget({this.playlistsInfo});
@@ -11,7 +10,7 @@ class PlaylistDeviceidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return ListView.builder(
-        itemCount: playlistsInfo.length,
+        itemCount: playlistsInfo?.length ?? 0,
         itemBuilder: (context, ind) {
           PlaylistInfo playlistInfo = playlistsInfo[ind];
           return InkWell(

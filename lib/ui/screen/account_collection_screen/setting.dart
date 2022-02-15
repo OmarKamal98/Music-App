@@ -1,6 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/provider/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 class Setting extends StatefulWidget {
   const Setting({Key key}) : super(key: key);
@@ -14,7 +17,6 @@ class _SettingState extends State<Setting> {
   Widget build(BuildContext context) {
     bool notification = false;
     Color butColor = Color(0xFFCBFB5E);
-    Color pageColor = Color(0xFF0E0B1F);
     return Scaffold(
       body: Container(
         color: const Color(0xFF0E0B1F),
@@ -41,7 +43,7 @@ class _SettingState extends State<Setting> {
                   Padding(
                     padding: EdgeInsets.only(left: 110.w),
                     child: Text(
-                      'Setting',
+                      'Setting'.tr(),
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20.sp,
@@ -68,7 +70,7 @@ class _SettingState extends State<Setting> {
                         width: 20.w,
                       ),
                       Text(
-                        "Notification",
+                        "Notification".tr(),
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: Colors.white,
@@ -106,7 +108,7 @@ class _SettingState extends State<Setting> {
                         width: 20.w,
                       ),
                       Text(
-                        "Display Language",
+                        "Language".tr(),
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: Colors.white,
@@ -145,7 +147,7 @@ class _SettingState extends State<Setting> {
                         width: 20.w,
                       ),
                       Text(
-                        "Equalizer",
+                        "Equalizer".tr(),
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: Colors.white,
@@ -179,7 +181,7 @@ class _SettingState extends State<Setting> {
                         width: 20.w,
                       ),
                       Text(
-                        "Term of Service",
+                        "TermofService".tr(),
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: Colors.white,
@@ -213,7 +215,7 @@ class _SettingState extends State<Setting> {
                         width: 20.w,
                       ),
                       Text(
-                        "Version 3.2",
+                        "Version".tr(),
                         style: TextStyle(
                           fontSize: 14.sp,
                           color: Colors.white,
@@ -233,19 +235,18 @@ class _SettingState extends State<Setting> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w),
                 child: InkWell(
-                  onTap: (){},
-
+                  onTap: () {
+                    Provider.of<AuthProvider>(context, listen: false).logOut();
+                  },
                   child: Container(
                     width: double.infinity,
                     height: 46.h,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      border: Border.all(width: 1,color: butColor),
-
-
+                      border: Border.all(width: 1, color: butColor),
                     ),
                     child: Text(
-                      "SING OUT",
+                      "signout".tr(),
                       style: TextStyle(
                         fontSize: 16.sp,
                         color: butColor,

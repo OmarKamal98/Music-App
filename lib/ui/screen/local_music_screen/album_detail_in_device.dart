@@ -5,6 +5,7 @@ import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
 import 'package:musicapp/ui/widget/component/song_card_widget.dart';
 
+// ignore: must_be_immutable
 class AlbumDetailLocal extends StatelessWidget {
   AlbumInfo albumInfo;
   AlbumDetailLocal({this.albumInfo});

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:musicapp/ui/widget/component/artist_device_widget.dart';
@@ -5,6 +6,8 @@ import 'package:musicapp/ui/widget/component/playlist_device_widget.dart';
 import 'package:musicapp/ui/widget/component/song_card_widget.dart';
 import 'package:musicapp/ui/widget/gradient_containers.dart';
 import '../../widget/component/album_device_widget.dart';
+
+List<SongInfo> songs = [];
 
 class MyMusicScreen extends StatefulWidget {
   @override
@@ -48,7 +51,7 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
   //   });
   // }
 
-  TabController _tcontroller;
+  TabController tabController;
 
   @override
   Widget build(BuildContext context) {
@@ -61,22 +64,22 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
               child: Scaffold(
                 backgroundColor: Colors.transparent,
                 appBar: AppBar(
-                  title: const Text('myMusic'),
+                  title: Text('myMusic'.tr()),
                   bottom: TabBar(
                     isScrollable: true,
-                    controller: _tcontroller,
+                    controller: tabController,
                     tabs: [
                       Tab(
-                        text: 'songs',
+                        text: 'songs'.tr(),
                       ),
                       Tab(
-                        text: 'albums',
+                        text: 'albums'.tr(),
                       ),
                       Tab(
-                        text: 'Artist',
+                        text: 'Artist'.tr(),
                       ),
                       Tab(
-                        text: 'Playlist',
+                        text: 'Playlist'.tr(),
                       ),
                     ],
                   ),
@@ -86,7 +89,7 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
                 ),
                 body: TabBarView(
                   // physics: const CustomPhysics(),
-                  controller: _tcontroller,
+                  controller: tabController,
                   children: [
                     GetSongFromDevice(),
                     GetAlbumFromDevice(),
@@ -102,125 +105,9 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
       ),
     );
   }
-
-  //
-  // Widget songProgress(BuildContext context) {
-  //   TextStyle style = TextStyle(color: Colors.black);
-  //   return Row(
-  //     children: <Widget>[
-  //       Text(
-  //         _formatDuration(audioManagerInstance.position),
-  //         style: style,
-  //       ),
-  //       Expanded(
-  //         child: Padding(
-  //           padding: EdgeInsets.symmetric(horizontal: 5),
-  //           child: SliderTheme(
-  //               data: SliderTheme.of(context).copyWith(
-  //                 trackHeight: 2,
-  //                 thumbColor: Colors.blueAccent,
-  //                 overlayColor: Colors.blue,
-  //                 thumbShape: RoundSliderThumbShape(
-  //                   disabledThumbRadius: 5,
-  //                   enabledThumbRadius: 5,
-  //                 ),
-  //                 overlayShape: RoundSliderOverlayShape(
-  //                   overlayRadius: 10,
-  //                 ),
-  //                 activeTrackColor: Colors.blueAccent,
-  //                 inactiveTrackColor: Colors.grey,
-  //               ),
-  //               child: Slider(
-  //                 value: _slider ?? 0,
-  //                 onChanged: (value) {
-  //                   setState(() {
-  //                     _slider = value;
-  //                   });
-  //                 },
-  //                 onChangeEnd: (value) {
-  //                   if (audioManagerInstance.duration != null) {
-  //                     Duration msec = Duration(
-  //                         milliseconds:
-  //                             (audioManagerInstance.duration.inMilliseconds *
-  //                                     value)
-  //                                 .round());
-  //                     audioManagerInstance.seekTo(msec);
-  //                   }
-  //                 },
-  //               )),
-  //         ),
-  //       ),
-  //       Text(
-  //         _formatDuration(audioManagerInstance.duration),
-  //         style: style,
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // Widget bottomPanel() {
-  //   return Column(children: <Widget>[
-  //     Padding(
-  //       padding: EdgeInsets.symmetric(horizontal: 10),
-  //       child: songProgress(context),
-  //     ),
-  //     Container(
-  //       padding: EdgeInsets.symmetric(vertical: 10),
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //         children: <Widget>[
-  //           CircleAvatar(
-  //             child: Center(
-  //               child: IconButton(
-  //                   icon: Icon(
-  //                     Icons.skip_previous,
-  //                     color: Colors.white,
-  //                   ),
-  //                   onPressed: () => audioManagerInstance.previous()),
-  //             ),
-  //             backgroundColor: Colors.cyan.withOpacity(0.3),
-  //           ),
-  //           CircleAvatar(
-  //             radius: 30,
-  //             child: Center(
-  //               child: IconButton(
-  //                 onPressed: () async {
-  //                   audioManagerInstance.playOrPause();
-  //                 },
-  //                 padding: const EdgeInsets.all(0.0),
-  //                 icon: Icon(
-  //                   audioManagerInstance.isPlaying
-  //                       ? Icons.pause
-  //                       : Icons.play_arrow,
-  //                   color: Colors.white,
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //           CircleAvatar(
-  //             backgroundColor: Colors.cyan.withOpacity(0.3),
-  //             child: Center(
-  //               child: IconButton(
-  //                   icon: Icon(
-  //                     Icons.skip_next,
-  //                     color: Colors.white,
-  //                   ),
-  //                   onPressed: () => audioManagerInstance.next()),
-  //             ),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   ]);
-  // }
 }
 
-// AudioManager audioManagerInstance = AudioManager.instance;
-// bool showVol = false;
-// PlayMode playMode = audioManagerInstance.playMode;
-// bool isPlaying = false;
-// double _slider;
-
+// ignore: must_be_immutable
 class GetSongFromDevice extends StatelessWidget {
   List<SongInfo> allSong = [];
   @override
@@ -238,6 +125,7 @@ class GetSongFromDevice extends StatelessWidget {
                     .getSongs(sortType: SongSortType.ALPHABETIC_ALBUM),
                 builder: (context, snapshot) {
                   List<SongInfo> songInfo = snapshot.data;
+                  songs = songInfo;
                   allSong = snapshot.data;
                   if (snapshot.hasData) return SongWidget(songList: songInfo);
                   return Container(
@@ -251,7 +139,7 @@ class GetSongFromDevice extends StatelessWidget {
                             width: 20,
                           ),
                           Text(
-                            "Loading....",
+                            "Loading".tr(),
                             style: TextStyle(fontWeight: FontWeight.bold),
                           )
                         ],
@@ -323,43 +211,38 @@ class GetArtistFromDevice extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFF0E0B1F),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Container(
-              height: 500,
-              child: FutureBuilder(
-                future: FlutterAudioQuery().getArtists(),
-                builder: (context, snapshot) {
-                  List<ArtistInfo> artistInfo = snapshot.data;
-                  if (snapshot.hasData)
-                    return ArtisteDeviceWidget(
-                      artistsInfo: artistInfo,
-                    );
-                  return Container(
-                    height: MediaQuery.of(context).size.height * 0.4,
-                    child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          CircularProgressIndicator(),
-                          SizedBox(
-                            width: 20,
-                          ),
-                          Text(
-                            "Loading....",
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        ],
+        child: Container(
+          height: 500,
+          child: FutureBuilder(
+            future: FlutterAudioQuery().getArtists(),
+            builder: (context, snapshot) {
+              List<ArtistInfo> artistInfo = snapshot.data;
+              if (snapshot.hasData)
+                return ArtisteDeviceWidget(
+                  artistsInfo: artistInfo,
+                );
+              return Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircularProgressIndicator(),
+                      SizedBox(
+                        width: 20,
                       ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            // bottomPanel(),
-          ],
+                      Text(
+                        "Loading....",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
         ),
+        // bottomPanel(),
       ),
     );
   }

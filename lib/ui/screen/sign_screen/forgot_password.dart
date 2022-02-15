@@ -8,6 +8,7 @@ import 'package:musicapp/ui/widget/component/text_field_custom.dart';
 import 'package:provider/provider.dart';
 import 'package:string_validator/string_validator.dart';
 
+// ignore: must_be_immutable
 class ForgotPassword extends StatelessWidget {
   TextEditingController emailControl = TextEditingController();
   validateEmail(String value) {

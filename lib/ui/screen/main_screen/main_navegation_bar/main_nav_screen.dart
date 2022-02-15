@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:musicapp/audio_player_asset.dart';
@@ -6,6 +7,7 @@ import 'package:musicapp/ui/screen/main_screen/home_secreen.dart';
 import 'package:musicapp/ui/screen/main_screen/my_music.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
+// ignore: must_be_immutable
 class MainNav extends StatelessWidget {
   PersistentTabController _controller =
       PersistentTabController(initialIndex: 0);
@@ -52,25 +54,25 @@ class MainNav extends StatelessWidget {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(CupertinoIcons.home),
-        title: ("Home"),
+        title: ("Home".tr()),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.explore),
-        title: ("Explore"),
+        title: ("Explore".tr()),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.queue_music),
-        title: ("My Music"),
+        title: ("MyMusic".tr()),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.account_box_outlined),
-        title: ("Account"),
+        title: ("Account".tr()),
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),

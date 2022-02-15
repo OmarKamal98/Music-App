@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
@@ -32,7 +33,7 @@ class _AccountState extends State<Account> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Account",
+                    "Account".tr(),
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -71,7 +72,7 @@ class _AccountState extends State<Account> {
                                 fontSize: 14.sp),
                           ),
                           Text(
-                            "playlist",
+                            "Playlist".tr(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -89,7 +90,7 @@ class _AccountState extends State<Account> {
                                 fontSize: 14.sp),
                           ),
                           Text(
-                            "Follower",
+                            "Follower".tr(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -107,7 +108,7 @@ class _AccountState extends State<Account> {
                                 fontSize: 14.sp),
                           ),
                           Text(
-                            "Following",
+                            "Following".tr(),
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
@@ -118,7 +119,7 @@ class _AccountState extends State<Account> {
                     ],
                   ),
                   defaultButton(
-                    text: "Edit",
+                    text: "Edit".tr(),
                     width: 78.w,
                     function: () {
                       RouterClass.routerClass.pushWidget(EditAccount());
@@ -132,7 +133,7 @@ class _AccountState extends State<Account> {
                 height: 33.h,
               ),
               Text(
-                "Library",
+                "Library".tr(),
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -146,7 +147,7 @@ class _AccountState extends State<Account> {
                   Icons.my_library_music_outlined,
                   color: Colors.white,
                 ),
-                text: "My playlist",
+                text: "Playlist".tr(),
                 function: () {
                   RouterClass.routerClass.pushWidget(MyPlayList());
                 },
@@ -163,7 +164,7 @@ class _AccountState extends State<Account> {
                   Icons.album_outlined,
                   color: Colors.white,
                 ),
-                text: "Album",
+                text: "albums".tr(),
                 function: () {
                   RouterClass.routerClass.pushWidget(AlbumCollection());
                 },
@@ -180,7 +181,7 @@ class _AccountState extends State<Account> {
                   Icons.video_library_outlined,
                   color: Colors.white,
                 ),
-                text: "MV",
+                text: "songs".tr(),
                 function: () {
                   RouterClass.routerClass.pushWidget(SongCollection());
                 },
@@ -197,7 +198,7 @@ class _AccountState extends State<Account> {
                   Icons.contacts_outlined,
                   color: Colors.white,
                 ),
-                text: "Artist",
+                text: "Artist".tr(),
                 function: () {
                   RouterClass.routerClass.pushWidget(ArtistCollection());
                 },
@@ -214,109 +215,13 @@ class _AccountState extends State<Account> {
                   Icons.download,
                   color: Colors.white,
                 ),
-                text: "Download",
+                text: "Download".tr(),
                 function: () {},
               ),
               Divider(
                 color: Colors.white,
                 thickness: 1,
               ),
-              SizedBox(
-                height: 41.h,
-              ),
-              Text(
-                "Recent Activity",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22.sp),
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              Column(
-                children: [
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset(
-                          'assets/images/splash1.png',
-                          width: 80.w,
-                          height: 80.h,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(width: 16),
-                        Image.asset(
-                          'assets/images/splash1.png',
-                          width: 80.w,
-                          height: 80.h,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(width: 16),
-                        Image.asset(
-                          'assets/images/splash1.png',
-                          width: 80.w,
-                          height: 80.h,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(width: 16),
-                        Image.asset(
-                          'assets/images/splash1.png',
-                          width: 80.w,
-                          height: 80.h,
-                          fit: BoxFit.cover,
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16.h,
-                  ),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Image.asset(
-                          'assets/images/splash1.png',
-                          width: 80.w,
-                          height: 80.h,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Image.asset(
-                          'assets/images/splash1.png',
-                          width: 80.w,
-                          height: 80.h,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Image.asset(
-                          'assets/images/splash1.png',
-                          width: 80.w,
-                          height: 80.h,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                        Image.asset(
-                          'assets/images/splash1.png',
-                          width: 80.w,
-                          height: 80.h,
-                          fit: BoxFit.cover,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )
             ]),
           ),
         ),

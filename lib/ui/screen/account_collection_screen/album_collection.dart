@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/ui/screen/main_screen/my_music.dart';
@@ -50,12 +49,8 @@ class AlbumCollection extends StatelessWidget {
               child: searchField(function: () {}),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * .7,
-              child: FutureBuilder(
-                  future: FlutterAudioQuery().getAlbums(),
-                  builder: (context, data) {
-                    return GetAlbumFromDevice();
-                  }),
+              height: MediaQuery.of(context).size.height * .8 - 20,
+              child: GetAlbumFromDevice(),
             )
           ],
         ),

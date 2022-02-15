@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/ui/screen/main_screen/my_music.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
 
 class ArtistCollection extends StatelessWidget {
@@ -47,6 +48,10 @@ class ArtistCollection extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: searchField(function: () {}),
             ),
+            Container(
+              height: MediaQuery.of(context).size.height * .8 - 20,
+              child: GetArtistFromDevice(),
+            )
           ],
         ),
       ),
