@@ -1,25 +1,20 @@
-import 'package:flutter/foundation.dart';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:musicapp/data/api/dio_client.dart';
 import 'package:musicapp/model/aldum_model.dart';
+import 'package:musicapp/model/song_model.dart';
 
 class APIProvider extends ChangeNotifier {
   APIProvider() {
-    // getAllAlbum();
+    getTracks();
   }
-
   List<Albums> albums = [];
-
-  // getAllAlbum() async {
-  //   Album album = (await DioClient.dioClient.getAlbum());
-  //   log('omar okefpojeinkjnef omar omar oamr');
-  //   this.albums.addAll(album.albums);
-  //   notifyListeners();
-  //   return albums;
-  // }
-  // getAllSong() async {
-  //   Song song =  await DioClient.dioClient.getSong())  ;
-  //   this.albums.addAll(album.albums);
-  //   notifyListeners();
-  // }
+  List<Items> items = [];
+  getTracks() async {
+    Album album = await DioClient.dioClient.getAlbumsAPI();
+    albums = album.albums;
+    items = album.albums.first.tracks.items;
+    notifyListeners();
+  }
 }

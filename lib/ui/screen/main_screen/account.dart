@@ -56,11 +56,17 @@ class _AccountState extends State<Account> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset(
-                        'assets/images/splash1.png',
+                      Container(
                         width: 80.w,
                         height: 80.h,
-                        fit: BoxFit.cover,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage(
+                                'assets/images/cover.jpg',
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(23)),
                       ),
                       Column(
                         children: [

@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/provider/songs_provider.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
+import 'package:musicapp/ui/widget/component/seekbar_controlbuttons.dart';
 import 'package:musicapp/ui/widget/component/song_card_widget.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class AlbumDetailLocal extends StatelessWidget {
@@ -11,6 +14,7 @@ class AlbumDetailLocal extends StatelessWidget {
   AlbumDetailLocal({this.albumInfo});
   @override
   Widget build(BuildContext context) {
+    playingsongs = Provider.of<SongsProvider>(context).songInAlbum;
     // TODO: implement build
     return Scaffold(
       body: Container(
@@ -26,6 +30,8 @@ class AlbumDetailLocal extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: () {
+                      playingsongs =
+                          Provider.of<SongsProvider>(context).allSong;
                       RouterClass.routerClass.popFunction();
                     },
                     icon: Icon(
@@ -59,17 +65,9 @@ class AlbumDetailLocal extends StatelessWidget {
               child: searchField(function: () {}),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * .7,
-              child: FutureBuilder(
-                future: FlutterAudioQuery()
-                    .getSongsFromAlbum(albumId: albumInfo.id),
-                builder: (context, data1) {
-                  List<SongInfo> songInfo = data1.data;
-                  return SongWidget(
-                    songList: songInfo,
-                  );
-                },
-              ),
+              height: 600,
+              child: Provider.of<SongsProvider>(context)
+                  .getSongFromAlbum(albumInfo),
             )
           ],
         ),

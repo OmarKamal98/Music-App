@@ -5,7 +5,6 @@ class AuthHelper {
   static AuthHelper authHelper = AuthHelper._();
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   String wrongPass;
-  // ignore: missing_return
   Future<UserCredential> createNewAccount(String email, String password) async {
     try {
       UserCredential userCredential = await firebaseAuth
@@ -23,7 +22,6 @@ class AuthHelper {
     }
   }
 
-  // ignore: missing_return
   Future<UserCredential> signIn(String email, String password) async {
     try {
       UserCredential userCredential = await firebaseAuth
@@ -33,6 +31,7 @@ class AuthHelper {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
+        String wrong = 'Error password';
         print('Wrong password provided for that user.');
       }
     }

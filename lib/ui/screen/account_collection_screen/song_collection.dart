@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/provider/songs_provider.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
+import 'package:provider/provider.dart';
 
 class SongCollection extends StatelessWidget {
   @override
@@ -46,6 +48,19 @@ class SongCollection extends StatelessWidget {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24.w),
               child: searchField(function: () {}),
+            ),
+            Container(
+              color: Color(0xFF0E0B1F),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    height: 620,
+                    child:
+                        Provider.of<SongsProvider>(context).getSongFromDevice(),
+                  ),
+                ],
+              ),
             ),
           ],
         ),

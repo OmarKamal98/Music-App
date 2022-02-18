@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/provider/songs_provider.dart';
 import 'package:musicapp/ui/screen/main_screen/my_music.dart';
 import 'package:musicapp/ui/widget/component/component.dart';
+import 'package:provider/provider.dart';
 
 class AlbumCollection extends StatelessWidget {
   @override
@@ -49,9 +51,9 @@ class AlbumCollection extends StatelessWidget {
               child: searchField(function: () {}),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * .8 - 20,
-              child: GetAlbumFromDevice(),
-            )
+              height: 620,
+              child: Provider.of<SongsProvider>(context).getArtistFromDevice(),
+            ),
           ],
         ),
       ),

@@ -1,5 +1,3 @@
-import 'package:musicapp/model/arttist_model.dart';
-
 class Album {
   List<Albums> albums;
 
@@ -29,7 +27,6 @@ class Albums {
   List<Copyrights> copyrights;
   ExternalIds externalIds;
   ExternalUrls externalUrls;
-  List<Null> genres;
   String id;
   List<Images> images;
   String label;
@@ -48,7 +45,6 @@ class Albums {
       this.copyrights,
       this.externalIds,
       this.externalUrls,
-      this.genres,
       this.id,
       this.images,
       this.label,
@@ -81,12 +77,7 @@ class Albums {
     externalUrls = json['external_urls'] != null
         ? new ExternalUrls.fromJson(json['external_urls'])
         : null;
-    if (json['genres'] != null) {
-      genres = <Null>[];
-      json['genres'].forEach((v) {
-        genres.add(Null);
-      });
-    }
+
     id = json['id'];
     if (json['images'] != null) {
       images = <Images>[];
@@ -121,9 +112,6 @@ class Albums {
     if (this.externalUrls != null) {
       data['external_urls'] = this.externalUrls.toJson();
     }
-    if (this.genres != null) {
-      // data['genres'] = this.genres.map((v) => v.toJson()).toList();
-    }
     data['id'] = this.id;
     if (this.images != null) {
       data['images'] = this.images.map((v) => v.toJson()).toList();
@@ -137,6 +125,38 @@ class Albums {
     if (this.tracks != null) {
       data['tracks'] = this.tracks.toJson();
     }
+    data['type'] = this.type;
+    data['uri'] = this.uri;
+    return data;
+  }
+}
+
+class Artists {
+  ExternalUrls externalUrls;
+  String id;
+  String name;
+  String type;
+  String uri;
+
+  Artists({this.externalUrls, this.id, this.name, this.type, this.uri});
+
+  Artists.fromJson(Map<String, dynamic> json) {
+    externalUrls = json['external_urls'] != null
+        ? new ExternalUrls.fromJson(json['external_urls'])
+        : null;
+    id = json['id'];
+    name = json['name'];
+    type = json['type'];
+    uri = json['uri'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.externalUrls != null) {
+      data['external_urls'] = this.externalUrls.toJson();
+    }
+    data['id'] = this.id;
+    data['name'] = this.name;
     data['type'] = this.type;
     data['uri'] = this.uri;
     return data;

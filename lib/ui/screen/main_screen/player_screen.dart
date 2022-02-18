@@ -4,16 +4,13 @@ import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:marquee/marquee.dart';
+import 'package:musicapp/provider/songs_provider.dart';
 import 'package:musicapp/ui/widget/component/seekbar_controlbuttons.dart';
-import 'package:musicapp/ui/widget/component/component.dart';
 import 'package:audio_session/audio_session.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
-//
-// Duration _position = new Duration();
-// final AudioPlayer audioPlayer = AudioPlayer();
-// bool isPlaying = true;
 final _player = AudioPlayer();
 
 // ignore: must_be_immutable
@@ -73,6 +70,7 @@ class _PlayerScreenState extends State<PlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
+    playingsongs = Provider.of<SongsProvider>(context).allSong;
     Color pageColor = Color(0xFF0E0B1F);
     return Scaffold(
       backgroundColor: pageColor,

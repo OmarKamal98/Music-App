@@ -1,17 +1,22 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:musicapp/navigator/router_class.dart';
+import 'package:musicapp/provider/songs_provider.dart';
 import 'package:musicapp/ui/screen/main_screen/my_music.dart';
 import 'package:musicapp/ui/screen/main_screen/player_screen.dart';
+import 'package:provider/provider.dart';
 
-/// Displays the play/pause/next/previse button and volume/speed sliders.
-// ignore: must_be_immutable
+List<SongInfo> playingsongs = [];
+
 class ControlButtons extends StatelessWidget {
   int index;
   final AudioPlayer player;
+
   ControlButtons(this.player, this.index);
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -30,10 +35,10 @@ class ControlButtons extends StatelessWidget {
           onPressed: () {
             player.stop();
             if (index == 0) {
-              index = songs.length;
+              index = playingsongs.length;
             }
             RouterClass.routerClass.pushWidgetReplacement(
-                PlayerScreen(index - 1, songs[index - 1]));
+                PlayerScreen(index - 1, playingsongs[index - 1]));
           },
         ),
         SizedBox(
@@ -107,11 +112,11 @@ class ControlButtons extends StatelessWidget {
           iconSize: 30.0,
           onPressed: () {
             player.stop();
-            if (songs.length - 1 == index) {
+            if (playingsongs.length - 1 == index) {
               index = -1;
             }
             RouterClass.routerClass.pushWidgetReplacement(
-                PlayerScreen(index + 1, songs[index + 1]));
+                PlayerScreen(index + 1, playingsongs[index + 1]));
           },
         ),
         SizedBox(

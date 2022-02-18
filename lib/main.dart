@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/provider/api_provider.dart';
 import 'package:musicapp/provider/auth_provider.dart';
+import 'package:musicapp/provider/songs_provider.dart';
+import 'package:musicapp/ui/screen/main_screen/main_navegation_bar/main_nav_screen.dart';
 
 import 'package:musicapp/ui/screen/sign_screen/splash.dart';
 
@@ -17,9 +19,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider<APIProvider>(create: (context) => APIProvider()),
-        ChangeNotifierProvider<AuthProvider>(
-            create: (context) => AuthProvider()),
+        ChangeNotifierProvider<APIProvider>(create: (_) => APIProvider()),
+        ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
+        ChangeNotifierProvider<SongsProvider>(create: (_) => SongsProvider()),
       ],
       child: EasyLocalization(
         supportedLocales: [Locale('en'), Locale('ar')],
@@ -54,7 +56,7 @@ class MyApp extends StatelessWidget {
                   child: widget,
                 );
               },
-              home: Splash(),
+              home: MainNav(),
             ));
     //return MaterialApp(home: MusicApp());
   }

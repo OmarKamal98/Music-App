@@ -93,8 +93,8 @@ class _SplashState extends State<Splash> {
                     if (user == null) {
                       RouterClass.routerClass.pushWidgetReplacement(SignUp());
                     } else {
-                      Provider.of<AuthProvider>(context, listen: false)
-                          .getUserFromFirebase();
+                      // Provider.of<AuthProvider>(context, listen: false)
+                      //     .getUserFromFirebase();
                       RouterClass.routerClass.pushWidgetReplacement(MainNav());
                     }
                   }),
