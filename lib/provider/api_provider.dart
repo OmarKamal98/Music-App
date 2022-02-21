@@ -14,7 +14,13 @@ class APIProvider extends ChangeNotifier {
   getTracks() async {
     Album album = await DioClient.dioClient.getAlbumsAPI();
     albums = album.albums;
-    items = album.albums.first.tracks.items;
+    for (int i = 0; i < album.albums.length; i++) {
+      items.addAll(album.albums[i].tracks.items);
+    }
+    items.shuffle();
+    log(items.length.toString());
+    log(items.length.toString());
+    log(items.length.toString());
     notifyListeners();
   }
 }

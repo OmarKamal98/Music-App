@@ -239,9 +239,9 @@ class Images {
 class Tracks {
   List<Items> items;
   int limit;
-  Null next;
+  bool next;
   int offset;
-  Null previous;
+  bool previous;
   int total;
 
   Tracks(

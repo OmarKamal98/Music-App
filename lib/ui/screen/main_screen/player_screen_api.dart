@@ -4,6 +4,8 @@ import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:marquee/marquee.dart';
+import 'package:musicapp/model/aldum_model.dart';
+import 'package:musicapp/provider/api_provider.dart';
 import 'package:musicapp/provider/songs_provider.dart';
 import 'package:musicapp/ui/widget/component/seekbar_controlbuttons.dart';
 import 'package:audio_session/audio_session.dart';
@@ -11,18 +13,18 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 
-final playerlocal = AudioPlayer();
+final _player = AudioPlayer();
 
 // ignore: must_be_immutable
-class PlayerScreen extends StatefulWidget {
-  SongInfo songInfo;
-  int index;
-  PlayerScreen(this.index, this.songInfo, {Key key}) : super(key: key);
+class PlayerScreen1 extends StatefulWidget {
+  Items _items;
+  int Index;
+  PlayerScreen1(this.Index, this._items, {Key key}) : super(key: key);
   @override
-  playerlocalScreenState createState() => playerlocalScreenState();
+  _PlayerScreenState createState() => _PlayerScreenState();
 }
 
-class playerlocalScreenState extends State<PlayerScreen> {
+class _PlayerScreenState extends State<PlayerScreen1> {
   @override
   void initState() {
     super.initState();
@@ -39,16 +41,16 @@ class playerlocalScreenState extends State<PlayerScreen> {
     final session = await AudioSession.instance;
     await session.configure(AudioSessionConfiguration.speech());
     // Listen to errors during playback.
-    playerlocal.playbackEventStream.listen((event) {},
+    _player.playbackEventStream.listen((event) {},
         onError: (Object e, StackTrace stackTrace) {
       print('A stream error occurred: $e');
     });
     // Try to load audio from a source and catch any errors.
     try {
-      await playerlocal.stop();
-      await playerlocal
-          .setAudioSource(AudioSource.uri(Uri.parse(widget.songInfo.uri)));
-      await playerlocal.play();
+      await _player.stop();
+      await _player
+          .setAudioSource(AudioSource.uri(Uri.parse(widget._items.previewUrl)));
+      await _player.play();
     } catch (e) {
       print("Error loading audio source: $e");
     }
@@ -62,15 +64,15 @@ class playerlocalScreenState extends State<PlayerScreen> {
 
   Stream<PositionData> get _positionDataStream =>
       Rx.combineLatest3<Duration, Duration, Duration, PositionData>(
-          playerlocal.positionStream,
-          playerlocal.bufferedPositionStream,
-          playerlocal.durationStream,
+          _player.positionStream,
+          _player.bufferedPositionStream,
+          _player.durationStream,
           (position, bufferedPosition, duration) => PositionData(
               position, bufferedPosition, duration ?? Duration.zero));
 
   @override
   Widget build(BuildContext context) {
-    playingsongs = Provider.of<SongsProvider>(context).allSong;
+    List<Items> playingNow = Provider.of<APIProvider>(context).items;
     Color pageColor = Color(0xFF0E0B1F);
     return Scaffold(
       backgroundColor: pageColor,
@@ -151,13 +153,13 @@ class playerlocalScreenState extends State<PlayerScreen> {
           Container(
             height: 40.h,
             padding: EdgeInsets.only(left: 39.w, right: 39.w),
-            child: buildAnimationText(widget.songInfo.title),
+            child: buildAnimationText(widget._items.name),
           ),
           SizedBox(height: 7.h),
           Text(
-            widget.songInfo.artist == '<unknown>'
+            widget._items.artists.first.name == '<unknown>'
                 ? 'unknown'.tr()
-                : widget.songInfo.artist,
+                : widget._items.artists.first.name,
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14.sp,
@@ -198,14 +200,14 @@ class playerlocalScreenState extends State<PlayerScreen> {
                       divisions: 10,
                       min: 0.0,
                       max: 1.0,
-                      value: playerlocal.volume,
-                      stream: playerlocal.volumeStream,
-                      onChanged: playerlocal.setVolume,
+                      value: _player.volume,
+                      stream: _player.volumeStream,
+                      onChanged: _player.setVolume,
                     );
                   },
                 ),
                 StreamBuilder<double>(
-                  stream: playerlocal.speedStream,
+                  stream: _player.speedStream,
                   builder: (context, snapshot) => IconButton(
                     icon: Text("${snapshot.data?.toStringAsFixed(1)}x",
                         style: TextStyle(
@@ -217,9 +219,9 @@ class playerlocalScreenState extends State<PlayerScreen> {
                         divisions: 10,
                         min: 0.5,
                         max: 1.5,
-                        value: playerlocal.speed,
-                        stream: playerlocal.speedStream,
-                        onChanged: playerlocal.setSpeed,
+                        value: _player.speed,
+                        stream: _player.speedStream,
+                        onChanged: _player.setSpeed,
                       );
                     },
                   ),
@@ -237,7 +239,7 @@ class playerlocalScreenState extends State<PlayerScreen> {
                 position: positionData?.position ?? Duration.zero,
                 bufferedPosition:
                     positionData?.bufferedPosition ?? Duration.zero,
-                onChangeEnd: playerlocal.seek,
+                onChanged: _player.seek,
               );
             },
           ),
@@ -245,9 +247,9 @@ class playerlocalScreenState extends State<PlayerScreen> {
           Padding(
             padding: EdgeInsets.only(left: 25.w, right: 25.w),
             child: ControlButtons(
-              playerlocal,
-              widget.index,
-              listsongIn: playingsongs,
+              _player,
+              widget.Index,
+              listItem: playingNow,
             ),
           ),
           SizedBox(height: 39.h),

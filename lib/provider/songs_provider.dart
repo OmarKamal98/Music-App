@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:musicapp/ui/widget/component/album_device_widget.dart';
 import 'package:musicapp/ui/widget/component/artist_device_widget.dart';
-import 'package:musicapp/ui/widget/component/seekbar_controlbuttons.dart';
 import 'package:musicapp/ui/widget/component/song_card_widget.dart';
 
 class SongsProvider extends ChangeNotifier {

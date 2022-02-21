@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:marquee/marquee.dart';
 import 'package:musicapp/provider/auth_provider.dart';
 import 'package:musicapp/provider/songs_provider.dart';
 import 'package:musicapp/ui/widget/component/artist_device_widget.dart';
@@ -67,7 +69,7 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
                           Container(
-                            height: 620,
+                            height: 542.4,
                             child: Provider.of<SongsProvider>(context)
                                 .getSongFromDevice(),
                           ),
@@ -125,9 +127,66 @@ class _MyMusicScreenState extends State<MyMusicScreen> {
               ),
             ),
           ),
+          Container(
+            height: 90,
+            padding: EdgeInsets.only(bottom: 10),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(left: 5, bottom: 5),
+                    width: 70,
+                    height: 70,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25.0),
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/cover.jpg'),
+                            fit: BoxFit.cover)),
+                  ),
+                  Container(
+                    width: 250,
+                    // height: 40,
+                    padding: EdgeInsets.only(left: 15.w, bottom: 20.h),
+                    child: buildAnimationText('music MiniPlayer'),
+                  ),
+                  Spacer(),
+                  Container(
+                      height: 45.0,
+                      width: 45.0,
+                      child: Center(
+                        child: Card(
+                          elevation: 5.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(
+                                25.0), // half of height and width of Image
+                          ),
+                          child: IconButton(
+                            icon: new Icon(
+                              Icons.call,
+                              size: 20.0,
+                            ),
+                            color: Color(0xFF162A49),
+                            onPressed: () {},
+                          ),
+                        ),
+                      )),
+                ]),
+          ),
           // const MiniPlayer(),****************************************************************************************************
         ],
       ),
     );
   }
+
+  Widget buildAnimationText(String text) => Marquee(
+        text: text,
+        style: TextStyle(
+          fontSize: 24.sp,
+          color: Colors.black,
+          fontWeight: FontWeight.w600,
+        ),
+        blankSpace: 50,
+        velocity: 45.0,
+      );
 }

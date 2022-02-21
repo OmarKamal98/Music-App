@@ -4,27 +4,14 @@ import 'package:musicapp/data/api/api_constants.dart';
 import 'package:musicapp/model/aldum_model.dart';
 
 class DioClient {
-  DioClient._() {
-    initDio();
-  }
-
+  DioClient._() {}
   static final DioClient dioClient = DioClient._();
-  Dio dio;
-  initDio() {
-    dio = Dio();
-    dio.options.baseUrl = ApiConstant.baseUrl;
-    dio.options.headers = {
-      'x-rapidapi-host': 'shazam-core.p.rapidapi.com',
-      'x-rapidapi-key': 'a7f6e53b75mshcb8d87b2a5013d0p188139jsn01f67df88f9a'
-    };
-    // dio.options.queryParameters = {'ids': '4WNcduiCmDNfmTEz7JvmLv'};
-  }
 
   Future<Album> getAlbumsAPI() async {
     try {
       log('message404');
       Response response = await Dio().get(
-        'https://spotify23.p.rapidapi.com/albums/?ids=2acSXrZhyv0h9DK1ycFhvH',
+        'https://spotify23.p.rapidapi.com/albums/?ids=02FsZxXXYQid3f167p43WF,2acSXrZhyv0h9DK1ycFhvH,50j2xwV87BTH8gc7ioNKW3,6y1pZHwzRrAhLnng4xC1hD,4f7ulBQDUMRrIQF0TeG30t,3ze1DaaeMYtUbnrS0A5O5m,21RHumbIml0kVANVJG06Dt',
         options: Options(headers: {
           'X-RapidAPI-Host': 'spotify23.p.rapidapi.com',
           'X-RapidAPI-Key': 'a7f6e53b75mshcb8d87b2a5013d0p188139jsn01f67df88f9a'
@@ -32,7 +19,10 @@ class DioClient {
       );
       // log(response.data.toString());
       Album albumAPI = Album.fromJson(response.data);
-      // log(albumAPI.albums.first.tracks.toString());
+      log(albumAPI.albums.length.toString());
+      log(albumAPI.albums.length.toString());
+      log(albumAPI.albums.length.toString());
+      log(albumAPI.albums.length.toString());
 
       return albumAPI;
     } on Exception catch (e) {

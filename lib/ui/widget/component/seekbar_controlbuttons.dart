@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_audio_query/flutter_audio_query.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:musicapp/model/aldum_model.dart';
 import 'package:musicapp/navigator/router_class.dart';
 import 'package:musicapp/provider/songs_provider.dart';
 import 'package:musicapp/ui/screen/main_screen/my_music.dart';
 import 'package:musicapp/ui/screen/main_screen/player_screen.dart';
+import 'package:musicapp/ui/screen/main_screen/player_screen_api.dart';
 import 'package:provider/provider.dart';
 
 List<SongInfo> playingsongs = [];
@@ -14,8 +16,9 @@ List<SongInfo> playingsongs = [];
 class ControlButtons extends StatelessWidget {
   int index;
   final AudioPlayer player;
-
-  ControlButtons(this.player, this.index);
+  List<Items> listItem;
+  List<SongInfo> listsongIn;
+  ControlButtons(this.player, this.index, {this.listItem, this.listsongIn});
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +37,19 @@ class ControlButtons extends StatelessWidget {
           icon: Icon(Icons.skip_previous_outlined),
           onPressed: () {
             player.stop();
-            if (index == 0) {
-              index = playingsongs.length;
+            if (listsongIn != null) {
+              if (index == 0) {
+                index = listsongIn.length;
+              }
+              RouterClass.routerClass.pushWidgetReplacement(
+                  PlayerScreen(index - 1, listsongIn[index - 1]));
+            } else {
+              if (index == 0) {
+                index = listItem.length;
+              }
+              RouterClass.routerClass.pushWidgetReplacement(
+                  PlayerScreen1(index - 1, listItem[index - 1]));
             }
-            RouterClass.routerClass.pushWidgetReplacement(
-                PlayerScreen(index - 1, playingsongs[index - 1]));
           },
         ),
         SizedBox(
@@ -89,13 +100,28 @@ class ControlButtons extends StatelessWidget {
                 ),
               );
             } else {
+              Future.delayed(Duration(milliseconds: 300)).then((v) async {
+                if (listsongIn != null) {
+                  if (listsongIn.length - 1 == index) {
+                    index = -1;
+                  }
+                  await RouterClass.routerClass.pushWidgetReplacement(
+                      PlayerScreen(index + 1, listsongIn[index + 1]));
+                } else {
+                  if (listItem.length - 1 == index) {
+                    index = -1;
+                  }
+                  await RouterClass.routerClass.pushWidgetReplacement(
+                      PlayerScreen1(index + 1, listItem[index + 1]));
+                }
+              });
               return IconButton(
                 color: Colors.white,
                 icon: Icon(
                   Icons.replay,
                   color: Colors.black,
                 ),
-                iconSize: 64.0,
+                iconSize: 50.0,
                 onPressed: () => player.seek(Duration.zero),
               );
             }
@@ -112,11 +138,19 @@ class ControlButtons extends StatelessWidget {
           iconSize: 30.0,
           onPressed: () {
             player.stop();
-            if (playingsongs.length - 1 == index) {
-              index = -1;
+            if (listsongIn != null) {
+              if (listsongIn.length - 1 == index) {
+                index = -1;
+              }
+              RouterClass.routerClass.pushWidgetReplacement(
+                  PlayerScreen(index + 1, listsongIn[index + 1]));
+            } else {
+              if (listItem.length - 1 == index) {
+                index = -1;
+              }
+              RouterClass.routerClass.pushWidgetReplacement(
+                  PlayerScreen1(index + 1, listItem[index + 1]));
             }
-            RouterClass.routerClass.pushWidgetReplacement(
-                PlayerScreen(index + 1, playingsongs[index + 1]));
           },
         ),
         SizedBox(
