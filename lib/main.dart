@@ -7,9 +7,6 @@ import 'package:musicapp/provider/api_provider.dart';
 import 'package:musicapp/provider/auth_provider.dart';
 import 'package:musicapp/provider/songs_provider.dart';
 import 'package:musicapp/ui/screen/main_screen/main_navegation_bar/main_nav_screen.dart';
-
-import 'package:musicapp/ui/screen/sign_screen/splash.dart';
-
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -42,14 +39,13 @@ class MyApp extends StatelessWidget {
         designSize: const Size(375, 812),
         minTextAdapt: true,
         splitScreenMode: true,
-        builder: () => MaterialApp(
+        builder: (context ,child) => MaterialApp(
               localizationsDelegates: context.localizationDelegates,
               supportedLocales: context.supportedLocales,
               locale: context.locale,
               navigatorKey: RouterClass.routerClass.navKey,
               routes: RouterClass.routerClass.map,
               builder: (context, widget) {
-                ScreenUtil.setContext(context);
                 return MediaQuery(
                   //Setting font does not change with system font size
                   data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
